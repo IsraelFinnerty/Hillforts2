@@ -13,7 +13,8 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <activity android:name=".activities.HillfortActivity"></activity>
-    <activity android:name=".activities.HillfortListActivity">
+    <activity android:name=".activities.HillfortListActivity"></activity>
+    <activity android:name=".activities.SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
