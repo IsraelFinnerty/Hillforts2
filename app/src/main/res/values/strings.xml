@@ -3,7 +3,7 @@
   <string name="hint_hillfortTitle">Hillfort Title</string>
   <string name="hint_description">Description</string>
   <string name="button_addHillfort">Add Hillfort</string>
-  <string name="button_editHillfort">Save Hillfortk</string>
+  <string name="button_editHillfort">Save Hillfort</string>
   <string name="menu_addHillfort">Add</string>
   <string name="menu_cancelHillfort">Cancel</string>
   <string name="menu_deleteHillfort">Delete</string>
