@@ -43,9 +43,9 @@ class HillfortAdapter constructor(
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(hillfort: HillfortModel, listener: HillfortListener) {
-            itemView.hillfortTitle.text = hillfort.title
+            itemView.hillfortTitle.text = hillfort.name
             itemView.description.text = hillfort.description
-            itemView.hillfortImage.setImageURI(Uri.parse(hillfort.image))
+            itemView.hillfortImage.setImageURI(Uri.parse(hillfort.image1))
             itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
         }
     }

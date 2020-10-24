@@ -41,12 +41,12 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/hillfortTitle"
+                    android:id="@+id/hillfortName"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_margin="8dp"
                     android:autofillHints=""
-                    android:hint="@string/hint_hillfortTitle"
+                    android:hint="@string/hint_hillfortName"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"

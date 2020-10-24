@@ -47,14 +47,14 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         if (intent.hasExtra("hillfort_edit")) {
             edit = true
             hillfort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
-            hillfortTitle.setText(hillfort.title)
+            hillfortName.setText(hillfort.name)
             description.setText(hillfort.description)
             btnAdd.setText(R.string.button_editHillfort)
 
-            if (hillfort.image != "")
+            if (hillfort.image1 != "")
                 chooseImage.setText(R.string.button_changeImage)
 
-            hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+            hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image1))
         }
 
         hillfortLocation.setOnClickListener {
@@ -69,9 +69,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
 
         btnAdd.setOnClickListener() {
-            hillfort.title = hillfortTitle.text.toString()
+            hillfort.name = hillfortName.text.toString()
             hillfort.description = description.text.toString()
-            if (hillfort.title.isNotEmpty()) {
+            if (hillfort.name.isNotEmpty()) {
                 if (edit) {
                     app.hillforts.update(hillfort.copy())
                 } else app.hillforts.create(hillfort.copy())
@@ -110,7 +110,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         when (requestCode) {
             IMAGE_REQUEST -> {
                 if (data != null) {
-                    hillfort.image = data.getData().toString()
+                    hillfort.image1 = data.getData().toString()
                     hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.button_changeImage)
                 }
