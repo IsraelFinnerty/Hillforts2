@@ -83,8 +83,7 @@ class Seed {
                 "dateVisited" : "",
                 "notes" : "",
                 "id" : "2438181596627245805",
-                "id" : "2438181596627245804",
-                "image1" : "carrigillihy.jpg",
+               "image1" : "@drawable/carrigillihy",
                 "image2" : "carrigillihyMap.png",
                 "image3" : "",
                 "image4" : ""
@@ -98,8 +97,8 @@ class Seed {
                 "dateVisited" : "",
                 "notes" : "",
                 "id" : "2438181596627245806",
-                "image1" : "moyross.png",
-                "image2" : "moyrossMap.png",
+                "image1" : "https://res.cloudinary.com/izzofinno/image/upload/v1603628777/samples/hillforts/moyross_dlr7vc.png",
+                "image2" : "https://res.cloudinary.com/izzofinno/image/upload/v1603628764/samples/hillforts/moyrossmap_uiqe2y.png",
                 "image3" : "",
                 "image4" : ""
             },

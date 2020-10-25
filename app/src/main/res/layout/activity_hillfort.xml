@@ -58,13 +58,13 @@
                 <EditText
                     android:id="@+id/description"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="300dp"
                     android:layout_margin="8dp"
                     android:autofillHints=""
                     android:hint="@string/hint_description"
                     android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
+                    android:maxLength="2500"
+                    android:maxLines="10"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
