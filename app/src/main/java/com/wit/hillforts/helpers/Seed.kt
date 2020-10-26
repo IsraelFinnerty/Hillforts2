@@ -27,8 +27,8 @@ class Seed {
             "dateVisited" : "",
             "notes" : "",
             "id" : "2438181596627245801",
-            "image1" : "downeen.jpg",
-            "image2" : "downeenMap.png",
+            "image1" : "downeen",
+            "image2" : "downeenmap",
             "image3" : "",
             "image4" : ""
         },
@@ -41,8 +41,8 @@ class Seed {
                 "dateVisited" : "",
                 "notes" : "",
                 "id" : "2438181596627245802",
-                "image1" : "dundeady.jpg",
-                "image2" : "dundeadyMap.png",
+                "image1" : "dundeady",
+                "image2" : "dundeadymap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -55,8 +55,8 @@ class Seed {
                 "dateVisited" : "",
                 "notes" : "",
                 "id" : "2438181596627245803",
-                "image1" : "donoure.png",
-                "image2" : "donoureMap.png",
+                "image1" : "donoure",
+                "image2" : "donouremap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -69,8 +69,8 @@ class Seed {
                 "dateVisited" : "",
                 "notes" : "",
                 "id" : "2438181596627245804",
-                "image1" : "reenogrena.png",
-                "image2" : "reenogrenaMap.png",
+                "image1" : "reenogrena",
+                "image2" : "reenogrenamap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -83,8 +83,8 @@ class Seed {
                 "dateVisited" : "",
                 "notes" : "",
                 "id" : "2438181596627245805",
-               "image1" : "@drawable/carrigillihy",
-                "image2" : "carrigillihyMap.png",
+               "image1" : "carrigillihy",
+                "image2" : "carrigillihymap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -97,8 +97,8 @@ class Seed {
                 "dateVisited" : "",
                 "notes" : "",
                 "id" : "2438181596627245806",
-                "image1" : "https://res.cloudinary.com/izzofinno/image/upload/v1603628777/samples/hillforts/moyross_dlr7vc.png",
-                "image2" : "https://res.cloudinary.com/izzofinno/image/upload/v1603628764/samples/hillforts/moyrossmap_uiqe2y.png",
+                "image1" : "moyross",
+                "image2" : "moyrossmap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -111,8 +111,8 @@ class Seed {
                 "dateVisited" : "",
                 "notes" : "",
                 "id" : "2438181596627245807",
-                "image1" : "reen.png",
-                "image2" : "reenMap.png",
+                "image1" : "reen",
+                "image2" : "reenmap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -125,8 +125,8 @@ class Seed {
                 "dateVisited" : "",
                 "notes" : "",
                 "id" : "2438181596627245808",
-                "image1" : "portadoona.png",
-                "image2" : "portadoonaMap.png",
+                "image1" : "portadoona",
+                "image2" : "portadoonamap",
                 "image3" : "",
                 "image4" : ""
             }

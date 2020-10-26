@@ -1,10 +1,12 @@
 package com.wit.hillforts.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.AnkoLogger
@@ -20,7 +22,7 @@ import com.wit.hillforts.models.Location
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.HillfortStore
 import kotlinx.android.synthetic.main.activity_hillfort.description
-
+import kotlinx.android.synthetic.main.card_hillfort.view.*
 
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
@@ -51,10 +53,15 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             description.setText(hillfort.description)
             btnAdd.setText(R.string.button_editHillfort)
 
-            if (hillfort.image1 != "")
-                chooseImage.setText(R.string.button_changeImage)
+            if (hillfort.image1 != "") {
 
-            hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image1))
+                chooseImage.setText(R.string.button_changeImage)
+                if (hillfort.image1.length > 20) {
+                    hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image1))
+                }
+                else  hillfortImage.setImageResource(this.getResources().getIdentifier(hillfort.image1, "drawable", this.packageName))
+
+            }
         }
 
         hillfortLocation.setOnClickListener {
