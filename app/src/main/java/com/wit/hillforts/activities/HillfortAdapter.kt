@@ -6,12 +6,14 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 import com.wit.hillforts.R
 import com.wit.hillforts.helpers.readImage
 import com.wit.hillforts.helpers.readImageFromPath
 import com.wit.hillforts.models.HillfortModel
+import kotlinx.android.synthetic.main.activity_hillfort.*
 
 
 interface HillfortListener {
@@ -43,9 +45,12 @@ class HillfortAdapter constructor(
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(hillfort: HillfortModel, listener: HillfortListener) {
-            itemView.hillfortTitle.text = hillfort.title
+            itemView.hillfortTitle.text = hillfort.name
             itemView.description.text = hillfort.description
-            itemView.hillfortImage.setImageURI(Uri.parse(hillfort.image))
+            if (hillfort.image1.length > 20) {
+                itemView.hillfortImage.setImageURI(Uri.parse(hillfort.image1))
+            }
+            else  itemView.hillfortImage.setImageResource(itemView.context.getResources().getIdentifier(hillfort.image1, "drawable", itemView.context.packageName))
             itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
         }
     }

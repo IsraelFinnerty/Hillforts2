@@ -1,77 +1,24 @@
-package com.wit.hillforts.models
+package com.wit.hillforts.helpers
 
 import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-import org.jetbrains.anko.AnkoLogger
-import com.wit.hillforts.helpers.*
-import java.util.*
+import com.wit.hillforts.models.HillfortStore
 
 val JSON_FILE = "hillforts.json"
-val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val listType = object : TypeToken<java.util.ArrayList<HillfortModel>>() {}.type
 
-fun generateRandomId(): Long {
-    return Random().nextLong()
-}
-
-class HillfortJSONStore : HillfortStore, AnkoLogger {
-
+class Seed {
     val context: Context
-    var hillforts = mutableListOf<HillfortModel>()
 
     constructor (context: Context) {
         this.context = context
 
-        if (exists(context, JSON_FILE)) {
-            deserialize()
+        if (!exists(context, JSON_FILE)) {
+            seed()
         }
-
-    }
-
-    override fun findAll(): MutableList<HillfortModel> {
-        return hillforts
-    }
-
-    override fun create(hillfort: HillfortModel) {
-        hillfort.id = generateRandomId()
-        hillforts.add(hillfort)
-        serialize()
-    }
-
-
-    override fun update(hillfort: HillfortModel) {
-        var foundHillfort: HillfortModel? = hillforts.find { h -> h.id == hillfort.id }
-        if (foundHillfort != null) {
-            foundHillfort.name = hillfort.name
-            foundHillfort.description = hillfort.description
-            foundHillfort.image1 = hillfort.image1
-            foundHillfort.lat = hillfort.lat
-            foundHillfort.lng = hillfort.lng
-            foundHillfort.zoom = hillfort.zoom
-            serialize()
-        }
-    }
-
-    private fun serialize() {
-        val jsonString = gsonBuilder.toJson(hillforts, listType)
-        write(context, JSON_FILE, jsonString)
-    }
-
-    private fun deserialize() {
-        val jsonString = read(context, JSON_FILE)
-        hillforts = Gson().fromJson(jsonString, listType)
-    }
-
-    override fun delete(hillfort: HillfortModel) {
-        hillforts.remove(hillfort)
-        serialize()
 
     }
 
     private fun seed() {
-         val jsonSeed = """[ { 
+        val jsonSeed = """[ { 
             "name" : "Downeen",
             "description" : "This coastal stack is situated at Carrigagappul Cove, c. 2km S of Rosscarbery on the SW coast of Co. Cork. Depicted on the first edition OS six-inch map as site of Donoure Castle (1842). The site can be described as a small rocky island projecting SE into Castle Bay at an altitude of 9m OD with Downeen Castle (CO143-069002) at its N edge. There is no surface trace of earlier defences. Westropp (1914, 112) considered island 'only reached by a plank even when used as a dun in its fort-days'.",
             "lat" : "51.559961",
@@ -79,8 +26,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             "visited" : "false",
             "dateVisited" : "",
             "notes" : "",
-            "image1" : "downeen.jpg",
-            "image2" : "downeenMap.png",
+            "id" : "2438181596627245801",
+            "image1" : "downeen",
+            "image2" : "downeenmap",
             "image3" : "",
             "image4" : ""
         },
@@ -92,8 +40,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
                 "visited" : "false",
                 "dateVisited" : "",
                 "notes" : "",
-                "image1" : "dundeady.jpg",
-                "image2" : "dundeadyMap.png",
+                "id" : "2438181596627245802",
+                "image1" : "dundeady",
+                "image2" : "dundeadymap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -105,8 +54,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
                 "visited" : "false",
                 "dateVisited" : "",
                 "notes" : "",
-                "image1" : "donoure.png",
-                "image2" : "donoureMap.png",
+                "id" : "2438181596627245803",
+                "image1" : "donoure",
+                "image2" : "donouremap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -118,8 +68,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
                 "visited" : "false",
                 "dateVisited" : "",
                 "notes" : "",
-                "image1" : "reenogrena.png",
-                "image2" : "reenogrenaMap.png",
+                "id" : "2438181596627245804",
+                "image1" : "reenogrena",
+                "image2" : "reenogrenamap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -131,8 +82,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
                 "visited" : "false",
                 "dateVisited" : "",
                 "notes" : "",
-                "image1" : "carrigillihy.jpg",
-                "image2" : "carrigillihyMap.png",
+                "id" : "2438181596627245805",
+               "image1" : "carrigillihy",
+                "image2" : "carrigillihymap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -144,8 +96,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
                 "visited" : "false",
                 "dateVisited" : "",
                 "notes" : "",
-                "image1" : "moyross.png",
-                "image2" : "moyrossMap.png",
+                "id" : "2438181596627245806",
+                "image1" : "moyross",
+                "image2" : "moyrossmap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -157,8 +110,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
                 "visited" : "false",
                 "dateVisited" : "",
                 "notes" : "",
-                "image1" : "reen.png",
-                "image2" : "reenMap.png",
+                "id" : "2438181596627245807",
+                "image1" : "reen",
+                "image2" : "reenmap",
                 "image3" : "",
                 "image4" : ""
             },
@@ -170,16 +124,14 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
                 "visited" : "false",
                 "dateVisited" : "",
                 "notes" : "",
-                "image1" : "portadoona.png",
-                "image2" : "portadoonaMap.png",
+                "id" : "2438181596627245808",
+                "image1" : "portadoona",
+                "image2" : "portadoonamap",
                 "image3" : "",
                 "image4" : ""
             }
         ]"""
         write(context, JSON_FILE, jsonSeed)
-        serialize()
-        deserialize()
+
     }
-
-
 }

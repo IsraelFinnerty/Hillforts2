@@ -1,10 +1,12 @@
 package com.wit.hillforts.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.AnkoLogger
@@ -20,7 +22,7 @@ import com.wit.hillforts.models.Location
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.HillfortStore
 import kotlinx.android.synthetic.main.activity_hillfort.description
-
+import kotlinx.android.synthetic.main.card_hillfort.view.*
 
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
@@ -47,14 +49,19 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         if (intent.hasExtra("hillfort_edit")) {
             edit = true
             hillfort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
-            hillfortTitle.setText(hillfort.title)
+            hillfortName.setText(hillfort.name)
             description.setText(hillfort.description)
             btnAdd.setText(R.string.button_editHillfort)
 
-            if (hillfort.image != "")
-                chooseImage.setText(R.string.button_changeImage)
+            if (hillfort.image1 != "") {
 
-            hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+                chooseImage.setText(R.string.button_changeImage)
+                if (hillfort.image1.length > 20) {
+                    hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image1))
+                }
+                else  hillfortImage.setImageResource(this.getResources().getIdentifier(hillfort.image1, "drawable", this.packageName))
+
+            }
         }
 
         hillfortLocation.setOnClickListener {
@@ -69,9 +76,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
 
         btnAdd.setOnClickListener() {
-            hillfort.title = hillfortTitle.text.toString()
+            hillfort.name = hillfortName.text.toString()
             hillfort.description = description.text.toString()
-            if (hillfort.title.isNotEmpty()) {
+            if (hillfort.name.isNotEmpty()) {
                 if (edit) {
                     app.hillforts.update(hillfort.copy())
                 } else app.hillforts.create(hillfort.copy())
@@ -110,7 +117,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         when (requestCode) {
             IMAGE_REQUEST -> {
                 if (data != null) {
-                    hillfort.image = data.getData().toString()
+                    hillfort.image1 = data.getData().toString()
                     hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.button_changeImage)
                 }
