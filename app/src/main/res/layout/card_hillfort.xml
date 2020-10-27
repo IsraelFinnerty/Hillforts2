@@ -25,6 +25,14 @@
             android:layout_below="@id/hillfortTitle"
             android:maxLength="100"/>
 
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="675px"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:textStyle="bold"/>
+
         <ImageView
             android:id="@+id/hillfortImage"
             android:maxWidth="300px"
@@ -34,6 +42,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/visited"
+            android:layout_width="300px"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/hillfortImage"
+            />
 
     </RelativeLayout>
 

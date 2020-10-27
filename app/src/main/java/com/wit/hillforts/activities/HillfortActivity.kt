@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
@@ -51,6 +52,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
             hillfortName.setText(hillfort.name)
             description.setText(hillfort.description)
+            button_visited.setChecked(hillfort.visited)
             btnAdd.setText(R.string.button_editHillfort)
 
             if (hillfort.image1 != "") {
@@ -74,6 +76,17 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             startActivityForResult(intentFor<MapActivity>().putExtra("location", location), LOCATION_REQUEST)
         }
 
+
+        button_visited.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                date_visited.setVisibility(View.VISIBLE)
+                hillfort.visited = true
+            }
+            else {
+                date_visited.setVisibility(View.GONE)
+                hillfort.visited = false
+            }
+        }
 
         btnAdd.setOnClickListener() {
             hillfort.name = hillfortName.text.toString()
