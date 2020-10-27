@@ -52,8 +52,15 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
             hillfortName.setText(hillfort.name)
             description.setText(hillfort.description)
+            notes.setText(hillfort.notes)
             button_visited.setChecked(hillfort.visited)
+            date_visited.updateDate(hillfort.dateVisitedYear, hillfort.dateVisitedMonth, hillfort.dateVisitedDay)
             btnAdd.setText(R.string.button_editHillfort)
+
+            if (hillfort.visited) {
+                date_visited.setVisibility(View.VISIBLE)
+                date_title.setVisibility(View.VISIBLE)
+            }
 
             if (hillfort.image1 != "") {
 
@@ -80,10 +87,12 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         button_visited.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 date_visited.setVisibility(View.VISIBLE)
+                date_title.setVisibility(View.VISIBLE)
                 hillfort.visited = true
             }
             else {
                 date_visited.setVisibility(View.GONE)
+                date_title.setVisibility(View.GONE)
                 hillfort.visited = false
             }
         }
@@ -91,6 +100,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         btnAdd.setOnClickListener() {
             hillfort.name = hillfortName.text.toString()
             hillfort.description = description.text.toString()
+            hillfort.notes = notes.text.toString()
+            hillfort.dateVisitedYear = date_visited.year
+            hillfort.dateVisitedMonth =date_visited.month
+            hillfort.dateVisitedDay = date_visited.dayOfMonth
             if (hillfort.name.isNotEmpty()) {
                 if (edit) {
                     app.hillforts.update(hillfort.copy())

@@ -4,6 +4,7 @@
   <string name="hint_description">Description</string>
   <string name="hint_notes">Additional Notes</string>
   <string name="visited">Visited</string>
+  <string name="date">Date Visited</string>
   <string name="button_addHillfort">Add Hillfort</string>
   <string name="button_editHillfort">Save Hillfort</string>
   <string name="menu_addHillfort">Add</string>

@@ -142,10 +142,23 @@
 
                     />
 
+                <TextView
+                    android:id="@+id/date_title"
+                    android:text="@string/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:paddingLeft="16dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:visibility="gone"/>
+
                 <DatePicker
                     android:id="@+id/date_visited"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:datePickerMode="spinner"
+                    android:calendarViewShown="false"
                     android:visibility="gone"/>
 
                 <Button
