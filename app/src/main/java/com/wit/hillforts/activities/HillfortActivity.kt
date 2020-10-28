@@ -62,14 +62,24 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                 date_title.setVisibility(View.VISIBLE)
             }
 
-            if (hillfort.image1 != "") {
+            if (hillfort.image1 != "") { chooseImage.setText(R.string.button_changeImage)
+                if (hillfort.image1.length > 20) { hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image1))
+                } else hillfortImage.setImageResource(this.getResources().getIdentifier(hillfort.image1, "drawable", this.packageName))
+            }
 
-                chooseImage.setText(R.string.button_changeImage)
-                if (hillfort.image1.length > 20) {
-                    hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image1))
-                }
-                else  hillfortImage.setImageResource(this.getResources().getIdentifier(hillfort.image1, "drawable", this.packageName))
+            if (hillfort.image2 != "") { chooseImage2.setText(R.string.button_changeImage2)
+                if (hillfort.image2.length > 20) { hillfortImage2.setImageBitmap(readImageFromPath(this, hillfort.image2))
+                } else hillfortImage2.setImageResource(this.getResources().getIdentifier(hillfort.image2, "drawable", this.packageName))
+            }
 
+            if (hillfort.image3 != "") { chooseImage3.setText(R.string.button_changeImage3)
+                if (hillfort.image3.length > 20) { hillfortImage3.setImageBitmap(readImageFromPath(this, hillfort.image3))
+                } else hillfortImage4.setImageResource(this.getResources().getIdentifier(hillfort.image3, "drawable", this.packageName))
+            }
+
+            if (hillfort.image4 != "") { chooseImage4.setText(R.string.button_changeImage4)
+                if (hillfort.image4.length > 20) { hillfortImage4.setImageBitmap(readImageFromPath(this, hillfort.image4))
+                } else hillfortImage4.setImageResource(this.getResources().getIdentifier(hillfort.image4, "drawable", this.packageName))
             }
         }
 
@@ -116,9 +126,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             }
         }
 
-        chooseImage.setOnClickListener {
-            showImagePicker(this, IMAGE_REQUEST)
-        }
+        chooseImage.setOnClickListener { showImagePicker(this, IMAGE_REQUEST) }
+        chooseImage2.setOnClickListener { showImagePicker(this, IMAGE_REQUEST) }
+        chooseImage3.setOnClickListener { showImagePicker(this, IMAGE_REQUEST) }
+        chooseImage4.setOnClickListener { showImagePicker(this, IMAGE_REQUEST) }
 
 
     }
@@ -147,6 +158,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.button_changeImage)
                 }
+
             }
             LOCATION_REQUEST -> {
                 if (data != null) {
