@@ -45,8 +45,11 @@ class HillfortAdapter constructor(
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(hillfort: HillfortModel, listener: HillfortListener) {
+            var visited = if (hillfort.visited) "Yes" else "Not Yet"
             itemView.hillfortTitle.text = hillfort.name
             itemView.description.text = hillfort.description
+            itemView.location.text= "Location: ${hillfort.lat}, ${hillfort.lng}"
+            itemView.visited.text= "Visited: $visited"
             if (hillfort.image1.length > 20) {
                 itemView.hillfortImage.setImageURI(Uri.parse(hillfort.image1))
             }

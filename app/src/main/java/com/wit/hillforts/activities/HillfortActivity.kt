@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
@@ -51,22 +52,40 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
             hillfortName.setText(hillfort.name)
             description.setText(hillfort.description)
+            notes.setText(hillfort.notes)
+            button_visited.setChecked(hillfort.visited)
+            date_visited.updateDate(hillfort.dateVisitedYear, hillfort.dateVisitedMonth, hillfort.dateVisitedDay)
             btnAdd.setText(R.string.button_editHillfort)
 
-            if (hillfort.image1 != "") {
+            if (hillfort.visited) {
+                date_visited.setVisibility(View.VISIBLE)
+                date_title.setVisibility(View.VISIBLE)
+            }
 
-                chooseImage.setText(R.string.button_changeImage)
-                if (hillfort.image1.length > 20) {
-                    hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image1))
-                }
-                else  hillfortImage.setImageResource(this.getResources().getIdentifier(hillfort.image1, "drawable", this.packageName))
+            if (hillfort.image1 != "") { chooseImage.setText(R.string.button_changeImage)
+                if (hillfort.image1.length > 20) { hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image1))
+                } else hillfortImage.setImageResource(this.getResources().getIdentifier(hillfort.image1, "drawable", this.packageName))
+            }
 
+            if (hillfort.image2 != "") { chooseImage2.setText(R.string.button_changeImage2)
+                if (hillfort.image2.length > 20) { hillfortImage2.setImageBitmap(readImageFromPath(this, hillfort.image2))
+                } else hillfortImage2.setImageResource(this.getResources().getIdentifier(hillfort.image2, "drawable", this.packageName))
+            }
+
+            if (hillfort.image3 != "") { chooseImage3.setText(R.string.button_changeImage3)
+                if (hillfort.image3.length > 20) { hillfortImage3.setImageBitmap(readImageFromPath(this, hillfort.image3))
+                } else hillfortImage4.setImageResource(this.getResources().getIdentifier(hillfort.image3, "drawable", this.packageName))
+            }
+
+            if (hillfort.image4 != "") { chooseImage4.setText(R.string.button_changeImage4)
+                if (hillfort.image4.length > 20) { hillfortImage4.setImageBitmap(readImageFromPath(this, hillfort.image4))
+                } else hillfortImage4.setImageResource(this.getResources().getIdentifier(hillfort.image4, "drawable", this.packageName))
             }
         }
 
         hillfortLocation.setOnClickListener {
-            val location = Location(52.245696, -7.139102, 15f)
-            if (hillfort.zoom != 0f) {
+            val location = Location(51.566804, -9.088011,  10f)
+            if (hillfort.lat != 0.0) {
                 location.lat =  hillfort.lat
                 location.lng = hillfort.lng
                 location.zoom = hillfort.zoom
@@ -75,9 +94,26 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         }
 
 
+        button_visited.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                date_visited.setVisibility(View.VISIBLE)
+                date_title.setVisibility(View.VISIBLE)
+                hillfort.visited = true
+            }
+            else {
+                date_visited.setVisibility(View.GONE)
+                date_title.setVisibility(View.GONE)
+                hillfort.visited = false
+            }
+        }
+
         btnAdd.setOnClickListener() {
             hillfort.name = hillfortName.text.toString()
             hillfort.description = description.text.toString()
+            hillfort.notes = notes.text.toString()
+            hillfort.dateVisitedYear = date_visited.year
+            hillfort.dateVisitedMonth =date_visited.month
+            hillfort.dateVisitedDay = date_visited.dayOfMonth
             if (hillfort.name.isNotEmpty()) {
                 if (edit) {
                     app.hillforts.update(hillfort.copy())
@@ -90,9 +126,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             }
         }
 
-        chooseImage.setOnClickListener {
-            showImagePicker(this, IMAGE_REQUEST)
-        }
+        chooseImage.setOnClickListener { showImagePicker(this, IMAGE_REQUEST) }
+        chooseImage2.setOnClickListener { showImagePicker(this, 8) }
+        chooseImage3.setOnClickListener { showImagePicker(this,9) }
+        chooseImage4.setOnClickListener { showImagePicker(this, 10) }
 
 
     }
@@ -122,6 +159,29 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     chooseImage.setText(R.string.button_changeImage)
                 }
             }
+                8 -> {
+                    if (data != null) {
+                        hillfort.image2 = data.getData().toString()
+                        hillfortImage2.setImageBitmap(readImage(this, resultCode, data))
+                        chooseImage2.setText(R.string.button_changeImage2)
+                    }
+                }
+                9-> {
+                    if (data != null) {
+                        hillfort.image3 = data.getData().toString()
+                        hillfortImage3.setImageBitmap(readImage(this, resultCode, data))
+                        chooseImage3.setText(R.string.button_changeImage3)
+                    }
+                }
+
+                10-> {
+                    if (data != null) {
+                        hillfort.image4 = data.getData().toString()
+                        hillfortImage4.setImageBitmap(readImage(this, resultCode, data))
+                        chooseImage4.setText(R.string.button_changeImage4)
+                    }
+                }
+
             LOCATION_REQUEST -> {
                 if (data != null) {
                    val location = data.extras?.getParcelable<Location>("location")!!
