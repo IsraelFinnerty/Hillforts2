@@ -74,22 +74,7 @@
                     android:textStyle="bold"
                     android:textSize="18sp" />
 
-                <Switch
-                    android:id="@+id/button_visited"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:paddingLeft="16dp"
-                    android:showText="true"
-                    android:splitTrack="true"
-                    android:switchMinWidth="200px"
-                    android:switchPadding="10dp"
-                    android:textOff="No"
-                    android:textOn="Yes"
-                    android:thumbTextPadding="10dp"
 
-                    />
 
                 <EditText
                     android:id="@+id/description"
@@ -132,15 +117,23 @@
                     android:textSize="14sp"
                     android:scrollbars="vertical"/>
 
-                <TextView
-                    android:id="@+id/visited"
-                    android:text="@string/visited"
+
+
+                <Switch
+                    android:id="@+id/button_visited"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
                     android:paddingLeft="16dp"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:splitTrack="true"
+                    android:text="Visited"
+                    android:textSize="18sp"
+                    android:showText="true"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textOff="No"
+                    android:textOn="Yes"
+                    android:switchTextAppearance="@style/MySwitchStyle"
+
+                                        />
 
                 <TextView
                     android:id="@+id/date_title"
@@ -149,6 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:paddingLeft="16dp"
+                    android:paddingTop="5dp"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:visibility="gone"/>
