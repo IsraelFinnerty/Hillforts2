@@ -6,18 +6,17 @@ import com.wit.hillforts.models.HillfortStore
 val JSON_FILE = "hillforts.json"
 
 class Seed {
-    val context: Context
 
-    constructor (context: Context) {
-        this.context = context
 
-        if (!exists(context, JSON_FILE)) {
-            seed()
-        }
+    constructor () {
+
+
+        seed()
+
 
     }
 
-    private fun seed() {
+    private fun seed(): String {
         val jsonSeed = """[ { 
             "name" : "Downeen",
             "description" : "This coastal stack is situated at Carrigagappul Cove, c. 2km S of Rosscarbery on the SW coast of Co. Cork. Depicted on the first edition OS six-inch map as site of Donoure Castle (1842). The site can be described as a small rocky island projecting SE into Castle Bay at an altitude of 9m OD with Downeen Castle (CO143-069002) at its N edge. There is no surface trace of earlier defences. Westropp (1914, 112) considered island 'only reached by a plank even when used as a dun in its fort-days'.",
@@ -126,7 +125,7 @@ class Seed {
                 "image4" : ""
             }
         ]"""
-        write(context, JSON_FILE, jsonSeed)
+        return jsonSeed
 
     }
 }

@@ -1,8 +1,10 @@
 package com.wit.hillforts.models
 
 interface HillfortStore {
-    fun findAll(): List<HillfortModel>
-    fun create(hillfort: HillfortModel)
-    fun update(hillfort: HillfortModel)
-    fun delete(hillfort: HillfortModel)
+    fun findAll(user: User): List<User>
+    fun create(hillfort: HillfortModel, user: User)
+    fun update(hillfort: HillfortModel, user: User)
+    fun delete(hillfort: HillfortModel, user: User)
+    fun createUser(user: User)
+    fun findUserByEmail(email: String): User?
 }
