@@ -2,6 +2,9 @@ package com.wit.hillforts.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import org.json.JSONArray
+import org.json.JSONObject
+import java.sql.Array
 
 @Parcelize
 data class HillfortModel(  var id: Long = 0,
@@ -24,3 +27,11 @@ data class HillfortModel(  var id: Long = 0,
 data class Location(var lat: Double = 0.0,
                     var lng: Double = 0.0,
                     var zoom: Float = 0f) : Parcelable
+
+@Parcelize
+data class User    (var name: String = "",
+                    var id: Long = 0,
+                    var year: Int = 0,
+                    var email: String = "",
+                    var password: String = "",
+                    var hillforts: MutableList<HillfortModel> = mutableListOf() ): Parcelable

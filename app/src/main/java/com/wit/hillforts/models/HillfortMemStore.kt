@@ -12,6 +12,7 @@ internal fun getId(): Long {
 class HillfortMemStore : HillfortStore, AnkoLogger {
 
     val hillforts = ArrayList<HillfortModel>()
+    var users = mutableListOf<User>()
 
     override fun findAll(): List<HillfortModel> {
         return hillforts
@@ -42,5 +43,10 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
 
     override fun delete(hillfort: HillfortModel) {
         hillforts.remove(hillfort)
+    }
+
+    override fun createUser(user: User) {
+        users.add(user)
+
     }
 }
