@@ -46,9 +46,11 @@ class HillfortAdapter constructor(
 
         fun bind(hillfort: HillfortModel, listener: HillfortListener) {
             var visited = if (hillfort.visited) "Yes" else "Not Yet"
+            var formattedLat = String.format("%.5f", hillfort.lat)
+            var formattedLng = String.format("%.5f", hillfort.lng)
             itemView.hillfortTitle.text = hillfort.name
             itemView.description.text = hillfort.description
-            itemView.location.text= "Location: ${hillfort.lat}, ${hillfort.lng}"
+            itemView.location.text= "Location: ${formattedLat}, ${formattedLng}"
             itemView.visited.text= "Visited: $visited"
             if (hillfort.image1.length > 20) {
                 itemView.hillfortImage.setImageURI(Uri.parse(hillfort.image1))

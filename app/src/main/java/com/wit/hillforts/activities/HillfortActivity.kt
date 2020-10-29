@@ -22,6 +22,7 @@ import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.Location
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.HillfortStore
+import com.wit.hillforts.models.User
 import kotlinx.android.synthetic.main.activity_hillfort.description
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 
@@ -29,9 +30,13 @@ import kotlinx.android.synthetic.main.card_hillfort.view.*
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
     var hillfort = HillfortModel()
+    var user = User()
     lateinit var app: MainApp
-    val IMAGE_REQUEST = 1
-    val LOCATION_REQUEST = 2
+    val IMAGE_REQUEST1 = 1
+    val IMAGE_REQUEST2 = 2
+    val IMAGE_REQUEST3 = 3
+    val IMAGE_REQUEST4 = 4
+    val LOCATION_REQUEST = 5
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +44,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         setContentView(R.layout.activity_hillfort)
         info("Hillfort Activity started..")
 
+        if (intent.hasExtra("User"))
+        {
+            user = intent.extras?.getParcelable<User>("User")!!
+        }
 
         app = application as MainApp
         toolbarAdd.title = title
@@ -116,20 +125,20 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort.dateVisitedDay = date_visited.dayOfMonth
             if (hillfort.name.isNotEmpty()) {
                 if (edit) {
-                    app.hillforts.update(hillfort.copy())
-                } else app.hillforts.create(hillfort.copy())
+                    app.users.update(hillfort.copy(), user)
+                } else app.users.create(hillfort.copy(), user)
                 info("add Button Pressed: ${hillfort}")
                 setResult(AppCompatActivity.RESULT_OK)
-                finish()
+                startActivityForResult( intentFor<HillfortListActivity>().putExtra("User", user), 0)
             } else {
                 toast(getString(R.string.enter_title))
             }
         }
 
-        chooseImage.setOnClickListener { showImagePicker(this, IMAGE_REQUEST) }
-        chooseImage2.setOnClickListener { showImagePicker(this, 8) }
-        chooseImage3.setOnClickListener { showImagePicker(this,9) }
-        chooseImage4.setOnClickListener { showImagePicker(this, 10) }
+        chooseImage.setOnClickListener { showImagePicker(this, IMAGE_REQUEST1) }
+        chooseImage2.setOnClickListener { showImagePicker(this, IMAGE_REQUEST2) }
+        chooseImage3.setOnClickListener { showImagePicker(this, IMAGE_REQUEST3) }
+        chooseImage4.setOnClickListener { showImagePicker(this, IMAGE_REQUEST4) }
 
 
     }
@@ -142,8 +151,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.item_cancel -> finish()
-            R.id.item_delete -> {app.hillforts.delete(hillfort)
-            finish()}
+            R.id.item_delete -> {app.users.delete(hillfort, user)
+                startActivityForResult( intentFor<HillfortListActivity>().putExtra("User", user), 0)
+            }
 
         }
         return super.onOptionsItemSelected(item)
@@ -152,21 +162,21 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            IMAGE_REQUEST -> {
+            IMAGE_REQUEST1 -> {
                 if (data != null) {
                     hillfort.image1 = data.getData().toString()
                     hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.button_changeImage)
                 }
             }
-                8 -> {
+            IMAGE_REQUEST2 -> {
                     if (data != null) {
                         hillfort.image2 = data.getData().toString()
                         hillfortImage2.setImageBitmap(readImage(this, resultCode, data))
                         chooseImage2.setText(R.string.button_changeImage2)
                     }
                 }
-                9-> {
+            IMAGE_REQUEST3 -> {
                     if (data != null) {
                         hillfort.image3 = data.getData().toString()
                         hillfortImage3.setImageBitmap(readImage(this, resultCode, data))
@@ -174,7 +184,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     }
                 }
 
-                10-> {
+            IMAGE_REQUEST4 -> {
                     if (data != null) {
                         hillfort.image4 = data.getData().toString()
                         hillfortImage4.setImageBitmap(readImage(this, resultCode, data))

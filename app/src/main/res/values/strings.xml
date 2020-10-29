@@ -11,6 +11,10 @@
   <string name="menu_cancelHillfort">Cancel</string>
   <string name="menu_deleteHillfort">Delete</string>
   <string name="enter_title">Please enter a name</string>
+  <string name="enter_name">Please enter your name</string>
+  <string name="enter_email">Please enter your email</string>
+  <string name="enter_password">Please enter your password</string>
+  <string name="enter_year">Please enter your year</string>
   <string name="button_addImage"> Add Image 1</string>
   <string name="button_changeImage"> Change Image 1</string>
   <string name="button_addImage2"> Add Image 2</string>
@@ -22,4 +26,17 @@
   <string name="select_hillfort_image">Select Hillfort Image</string>
   <string name="button_location">Set Location</string>
   <string name="title_activity_map">Map</string>
+  <string name="login_title">Login</string>
+  <string name="signup_title">Signup</string>
+  <string name="hint_login">Email Address</string>
+  <string name="hint_password">Password</string>
+  <string name="hint_name">Name</string>
+  <string name="hint_year">Year</string>
+  <string name="button_login">Login</string>
+  <string name="button_signup">Signup</string>
+  <string name="signup_needed">Create an Account</string>
+  <string name="email_not_found">Email address not found</string>
+  <string name="incorrect_password">Incorrect password</string>
+
+
 </resources>
