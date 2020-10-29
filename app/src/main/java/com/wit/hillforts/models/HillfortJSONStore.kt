@@ -33,8 +33,8 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
 
     }
 
-    override fun findAll(): MutableList<HillfortModel> {
-        return hillforts
+    override fun findAll(user: User): MutableList<HillfortModel> {
+        return user.hillforts
     }
 
     override fun create(hillfort: HillfortModel) {
@@ -74,6 +74,15 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             serialize()
         }
     }
+
+    override fun findUserByEmail(email: String): User? {
+        for (each in users) {
+            if (email == each.email) return each
+        }
+            return null
+        }
+
+
 
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(users, listType)

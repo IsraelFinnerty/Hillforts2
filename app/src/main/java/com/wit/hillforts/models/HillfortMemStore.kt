@@ -14,7 +14,7 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
     val hillforts = ArrayList<HillfortModel>()
     var users = mutableListOf<User>()
 
-    override fun findAll(): List<HillfortModel> {
+    override fun findAll(user: User): List<HillfortModel> {
         return hillforts
     }
 
@@ -37,6 +37,9 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
         }
     }
 
+    override fun findUserByEmail(email: String): User? {
+        return null
+    }
     fun logAll() {
         hillforts.forEach { info("${it}") }
     }

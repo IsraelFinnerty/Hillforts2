@@ -13,22 +13,30 @@ import com.wit.hillforts.R
 import com.wit.hillforts.helpers.readImageFromPath
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
+import com.wit.hillforts.models.HillfortStore
+import com.wit.hillforts.models.User
 
 class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
     lateinit var app: MainApp
+    var user = User()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_list)
         app = application as MainApp
+        if (intent.hasExtra("User"))
+        {
+            user = intent.extras?.getParcelable<User>("User")!!
+        }
 
         toolbar.title = title
         setSupportActionBar(toolbar)
 
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        loadHillforts()
+        loadHillforts(user)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -48,12 +56,12 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        loadHillforts()
+        loadHillforts(user)
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun loadHillforts() {
-        showHillfort(app.hillforts.findAll())
+    private fun loadHillforts(user: User) {
+        showHillfort(user.hillforts)
     }
 
     fun showHillfort (hillforts: List<HillfortModel>) {

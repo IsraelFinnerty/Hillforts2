@@ -39,7 +39,7 @@ class SignupActivity: AppCompatActivity() {
             else if (user.year == 0) toast(getString(R.string.enter_year))
             else {
                 app.users.createUser(user.copy())
-                startActivityForResult(intentFor<HillfortListActivity>(), 0)
+                startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
             }
         }
 
