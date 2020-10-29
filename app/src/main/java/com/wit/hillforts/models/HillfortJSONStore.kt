@@ -33,14 +33,16 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
 
     }
 
-    override fun findAll(user: User): MutableList<HillfortModel> {
-        return user.hillforts
+    override fun findAll(user: User): MutableList<User> {
+        return users
     }
 
-    override fun create(hillfort: HillfortModel) {
+    override fun create(hillfort: HillfortModel, user: User) {
+        deserialize()
         hillfort.id = generateRandomId()
-        hillforts.add(hillfort)
-        serialize()
+        var currentUser = findUserByEmail(user.email)
+        if (currentUser != null) currentUser.hillforts.add(hillfort)
+         serialize()
     }
 
     override fun createUser(user: User) {
@@ -54,24 +56,27 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
     }
 
 
-    override fun update(hillfort: HillfortModel) {
-        var foundHillfort: HillfortModel? = hillforts.find { h -> h.id == hillfort.id }
-        if (foundHillfort != null) {
-            foundHillfort.name = hillfort.name
-            foundHillfort.description = hillfort.description
-            foundHillfort.image1 = hillfort.image1
-            foundHillfort.image2 = hillfort.image2
-            foundHillfort.image3 = hillfort.image3
-            foundHillfort.image4 = hillfort.image4
-            foundHillfort.lat = hillfort.lat
-            foundHillfort.lng = hillfort.lng
-            foundHillfort.zoom = hillfort.zoom
-            foundHillfort.notes = hillfort.notes
-            foundHillfort.visited = hillfort.visited
-            foundHillfort.dateVisitedYear = hillfort.dateVisitedYear
-            foundHillfort.dateVisitedMonth = hillfort.dateVisitedMonth
-            foundHillfort.dateVisitedDay = hillfort.dateVisitedDay
-            serialize()
+    override fun update(hillfort: HillfortModel, user: User) {
+        var currentUser = findUserByEmail(user.email)
+        if (currentUser != null) {
+            var foundHillfort: HillfortModel? = currentUser.hillforts.find { h -> h.id == hillfort.id }
+            if (foundHillfort != null) {
+                foundHillfort.name = hillfort.name
+                foundHillfort.description = hillfort.description
+                foundHillfort.image1 = hillfort.image1
+                foundHillfort.image2 = hillfort.image2
+                foundHillfort.image3 = hillfort.image3
+                foundHillfort.image4 = hillfort.image4
+                foundHillfort.lat = hillfort.lat
+                foundHillfort.lng = hillfort.lng
+                foundHillfort.zoom = hillfort.zoom
+                foundHillfort.notes = hillfort.notes
+                foundHillfort.visited = hillfort.visited
+                foundHillfort.dateVisitedYear = hillfort.dateVisitedYear
+                foundHillfort.dateVisitedMonth = hillfort.dateVisitedMonth
+                foundHillfort.dateVisitedDay = hillfort.dateVisitedDay
+                serialize()
+            }
         }
     }
 
@@ -94,11 +99,11 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
         users = Gson().fromJson(jsonString, listType)
     }
 
-    override fun delete(hillfort: HillfortModel) {
-        hillforts.remove(hillfort)
+    override fun delete(hillfort: HillfortModel, user: User) {
+        var currentUser = findUserByEmail(user.email)
+        if (currentUser != null) currentUser.hillforts.remove(hillfort)
         serialize()
-
-    }
+       }
 
 
     private fun seed(user: User): MutableList<HillfortModel> {
@@ -109,7 +114,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             ,lng = -9.024633
             ,visited = false
             ,notes = ""
-            ,id = 2438181596627245801
+            ,id = generateRandomId()
             ,image1 = "downeen"
             ,image2 = "downeenmap"
             ,image3 = ""
@@ -121,7 +126,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             ,lng = -8.953403
             ,visited = false
             ,notes = ""
-            ,id = 2438181596627245802
+            ,id = generateRandomId()
             ,image1 = "dundeady"
             ,image2 = "dundeadymap"
             ,image3 = ""
@@ -133,7 +138,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             ,lng = -8.956465
             ,visited = false
             ,notes = ""
-            ,id = 2438181596627245803
+            ,id = generateRandomId()
             ,image1 = "donoure"
             ,image2 = "donouremap"
             ,image3 = ""
@@ -145,7 +150,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             ,lng = -9.074029
             ,visited = false
             ,notes = ""
-            ,id = 2438181596627245804
+            ,id = generateRandomId()
             ,image1 = "reenogrena"
             ,image2 = "reenogrenamap"
             ,image3 = ""
@@ -157,7 +162,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             ,lng = -9.1114
             ,visited = false
             ,notes = ""
-            ,id = 2438181596627245805
+            ,id = generateRandomId()
             ,image1 = "carrigillihy"
             ,image2 = "carrigillihymap"
             ,image3 = ""
@@ -169,7 +174,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             ,lng = -9.143409
             ,visited = false
             ,notes = ""
-            ,id = 2438181596627245806
+            ,id = generateRandomId()
             ,image1 = "moyross"
             ,image2 = "moyrossmap"
             ,image3 = ""
@@ -181,7 +186,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             ,lng = -9.174795
             ,visited = false
             ,notes = ""
-            ,id = 2438181596627245807
+            ,id = generateRandomId()
             ,image1 = "reen"
             ,image2 = "reenmap"
             ,image3 = ""
@@ -193,7 +198,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             ,lng = -9.212005
             ,visited = false
             ,notes = ""
-            ,id = 2438181596627245808
+            ,id = generateRandomId()
             ,image1 = "portadoona"
             ,image2 = "portadoonamap"
             ,image3 = ""

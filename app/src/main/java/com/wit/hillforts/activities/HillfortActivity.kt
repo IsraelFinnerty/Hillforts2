@@ -22,6 +22,7 @@ import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.Location
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.HillfortStore
+import com.wit.hillforts.models.User
 import kotlinx.android.synthetic.main.activity_hillfort.description
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 
@@ -29,6 +30,7 @@ import kotlinx.android.synthetic.main.card_hillfort.view.*
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
     var hillfort = HillfortModel()
+    var user = User()
     lateinit var app: MainApp
     val IMAGE_REQUEST1 = 1
     val IMAGE_REQUEST2 = 2
@@ -42,6 +44,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         setContentView(R.layout.activity_hillfort)
         info("Hillfort Activity started..")
 
+        if (intent.hasExtra("User"))
+        {
+            user = intent.extras?.getParcelable<User>("User")!!
+        }
 
         app = application as MainApp
         toolbarAdd.title = title
@@ -119,11 +125,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort.dateVisitedDay = date_visited.dayOfMonth
             if (hillfort.name.isNotEmpty()) {
                 if (edit) {
-                    app.hillforts.update(hillfort.copy())
-                } else app.hillforts.create(hillfort.copy())
+                    app.users.update(hillfort.copy(), user)
+                } else app.users.create(hillfort.copy(), user)
                 info("add Button Pressed: ${hillfort}")
                 setResult(AppCompatActivity.RESULT_OK)
-                finish()
+                startActivityForResult( intentFor<HillfortListActivity>().putExtra("User", user), 0)
             } else {
                 toast(getString(R.string.enter_title))
             }
@@ -145,8 +151,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.item_cancel -> finish()
-            R.id.item_delete -> {app.hillforts.delete(hillfort)
-            finish()}
+            R.id.item_delete -> {app.users.delete(hillfort, user)
+                startActivityForResult( intentFor<HillfortListActivity>().putExtra("User", user), 0)
+            }
 
         }
         return super.onOptionsItemSelected(item)
