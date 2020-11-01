@@ -10,6 +10,8 @@
   <string name="menu_addHillfort">Add</string>
   <string name="menu_cancelHillfort">Cancel</string>
   <string name="menu_deleteHillfort">Delete</string>
+  <string name="menu_up">Up</string>
+  <string name="menu_logout">Log Out</string>
   <string name="enter_title">Please enter a name</string>
   <string name="enter_name">Please enter your name</string>
   <string name="enter_email">Please enter your email</string>

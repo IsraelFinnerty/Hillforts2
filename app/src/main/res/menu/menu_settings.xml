@@ -3,12 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/item_cancel"
-        android:title="@string/menu_cancelHillfort"
-        app:showAsAction="always"/>
-    <item
-        android:id="@+id/item_delete"
-        android:title="@string/menu_deleteHillfort"
+        android:id="@+id/item_up"
+        android:icon="@drawable/ic_baseline_arrow_upward_24"
+        android:title="@string/menu_up"
         app:showAsAction="always"/>
 
     <item

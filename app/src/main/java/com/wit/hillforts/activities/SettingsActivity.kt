@@ -1,18 +1,16 @@
 package com.wit.hillforts.activities
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.wit.hillforts.R
 import com.wit.hillforts.main.MainApp
-import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
-import kotlinx.android.synthetic.main.activity_hillfort.*
-import kotlinx.android.synthetic.main.activity_hillfort.toolbarAdd
 import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.activity_signup.*
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -29,16 +27,14 @@ class SettingsActivity: AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         app = application as MainApp
-        toolbarAdd.title = title
-        setSupportActionBar(toolbarAdd)
+        toolbarSettings.title = title
+        setSupportActionBar(toolbarSettings)
 
         if (intent.hasExtra("User"))
         {
             val currentUser = intent.extras?.getParcelable<User>("User")!!
             user = app.users.findUserByEmail(currentUser.email)!!
         }
-
-
 
         updateName.setText(user.name)
         updateEmail.setText(user.email)
@@ -56,7 +52,7 @@ class SettingsActivity: AppCompatActivity() {
             if (hillfort.visited) {
                 hillfortsVisited++
                 statsRecent.setVisibility(View.VISIBLE)
-                var currentVisited = LocalDate.of(hillfort.dateVisitedYear, hillfort.dateVisitedMonth, hillfort.dateVisitedDay)
+                var currentVisited = LocalDate.of(hillfort.dateVisitedYear, hillfort.dateVisitedMonth+1, hillfort.dateVisitedDay)
                 if (currentVisited.isAfter(recentVisited)) {
                     recentVisited=currentVisited
                     recentHillfort = hillfort.name
@@ -97,6 +93,21 @@ class SettingsActivity: AppCompatActivity() {
                 startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
             }
         }
+
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_settings, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.item_up -> finish()
+            R.id.item_logout -> startActivity<LoginActivity>()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
