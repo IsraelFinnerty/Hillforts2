@@ -29,6 +29,7 @@ class SignupActivity: AppCompatActivity() {
 
 
         btnNewSignup.setOnClickListener() {
+            var emailUsed = app.users.findUserByEmail(signup_email.text.toString())
             user.name = signup_name.text.toString()
             user.year = signup_year.text.toString().toInt()
             user.email = signup_email.text.toString()
@@ -36,13 +37,20 @@ class SignupActivity: AppCompatActivity() {
             if (user.name.isEmpty()) toast(getString(R.string.enter_name))
             else if (user.email.isEmpty()) toast(getString(R.string.enter_email))
             else if (user.password.isEmpty()) toast(getString(R.string.enter_password))
+            else if (user.password.length < 8) toast(getString(R.string.short_password))
             else if (user.year == 0) toast(getString(R.string.enter_year))
+            else if (emailUsed != null) toast(getString(R.string.email_used))
+            else if (isEmailValid(user.email) == false) toast(getString(R.string.email_invalid))
             else {
                 app.users.createUser(user.copy())
                 startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
             }
         }
+    }
 
 
+    private fun isEmailValid(email: String): Boolean {
+        val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})";
+        return EMAIL_REGEX.toRegex().matches(email);
     }
 }

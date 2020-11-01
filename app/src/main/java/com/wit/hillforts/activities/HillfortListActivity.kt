@@ -15,6 +15,7 @@ import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.HillfortStore
 import com.wit.hillforts.models.User
+import org.jetbrains.anko.startActivity
 
 class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
@@ -47,6 +48,8 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.item_add -> startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user),0)
+            R.id.item_settings -> startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user),0)
+            R.id.item_logout -> startActivity<LoginActivity>()
         }
         return super.onOptionsItemSelected(item)
     }

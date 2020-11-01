@@ -10,10 +10,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.toast
 import com.wit.hillforts.R
 import com.wit.hillforts.helpers.readImage
 import com.wit.hillforts.helpers.readImageFromPath
@@ -25,6 +21,7 @@ import com.wit.hillforts.models.HillfortStore
 import com.wit.hillforts.models.User
 import kotlinx.android.synthetic.main.activity_hillfort.description
 import kotlinx.android.synthetic.main.card_hillfort.view.*
+import org.jetbrains.anko.*
 
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
@@ -144,16 +141,21 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_hillfort, menu)
+        if (intent.hasExtra("hillfort_edit")) {
+            menuInflater.inflate(R.menu.menu_hillfort, menu)
+        }
+        else menuInflater.inflate(R.menu.menu_add, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.item_cancel -> finish()
-            R.id.item_delete -> {app.users.delete(hillfort, user)
-                startActivityForResult( intentFor<HillfortListActivity>().putExtra("User", user), 0)
+            R.id.item_delete -> {
+                app.users.delete(hillfort, user)
+                startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
             }
+            R.id.item_logout -> startActivity<LoginActivity>()
 
         }
         return super.onOptionsItemSelected(item)
