@@ -55,6 +55,17 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
         serialize()
     }
 
+    override fun updateUser(user: User) {
+        var currentUser = findUserByEmail(user.email)
+        if (currentUser != null) {
+            currentUser.name = user.name
+            currentUser.year = user.year
+            currentUser.email = user.email
+            currentUser.password = user.password
+        }
+        serialize()
+    }
+
 
     override fun update(hillfort: HillfortModel, user: User) {
         var currentUser = findUserByEmail(user.email)

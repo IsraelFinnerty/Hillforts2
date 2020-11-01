@@ -28,6 +28,9 @@
   <string name="title_activity_map">Map</string>
   <string name="login_title">Login</string>
   <string name="signup_title">Signup</string>
+  <string name="settings_title">Update Details</string>
+  <string name="button_settings">Update</string>
+  <string name="stats_title">Statistics</string>
   <string name="hint_login">Email Address</string>
   <string name="hint_password">Password</string>
   <string name="hint_name">Name</string>
@@ -36,7 +39,10 @@
   <string name="button_signup">Signup</string>
   <string name="signup_needed">Create an Account</string>
   <string name="email_not_found">Email address not found</string>
+  <string name="email_used">Email address is already registered</string>
+  <string name="email_invalid">Invalid email address</string>
   <string name="incorrect_password">Incorrect password</string>
+  <string name="short_password">Password must be at least 8 characters</string>
 
 
 </resources>

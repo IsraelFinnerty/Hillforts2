@@ -85,7 +85,7 @@
                     android:layout_margin="8dp"
                     android:autofillHints=""
                     android:hint="@string/hint_login"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:maxLength="40"
                     android:maxLines="1"
                     android:padding="8dp"

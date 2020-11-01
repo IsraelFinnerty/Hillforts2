@@ -16,6 +16,7 @@
     <activity android:name=".activities.HillfortListActivity"></activity>
     <activity android:name=".activities.LoginActivity"></activity>
     <activity android:name=".activities.SignupActivity"></activity>
+    <activity android:name=".activities.SettingsActivity"></activity>
     <activity android:name=".activities.SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
