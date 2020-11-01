@@ -28,6 +28,9 @@
   <string name="title_activity_map">Map</string>
   <string name="login_title">Login</string>
   <string name="signup_title">Signup</string>
+  <string name="settings_title">Update Details</string>
+  <string name="button_settings">Update</string>
+  <string name="stats_title">Statistics</string>
   <string name="hint_login">Email Address</string>
   <string name="hint_password">Password</string>
   <string name="hint_name">Name</string>

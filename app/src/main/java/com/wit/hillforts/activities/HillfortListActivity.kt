@@ -47,6 +47,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.item_add -> startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user),0)
+            R.id.item_settings -> startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user),0)
         }
         return super.onOptionsItemSelected(item)
     }

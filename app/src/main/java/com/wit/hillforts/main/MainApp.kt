@@ -1,7 +1,6 @@
 package com.wit.hillforts.main
 
 import android.app.Application
-import com.wit.hillforts.helpers.Seed
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import com.wit.hillforts.models.HillfortJSONStore
