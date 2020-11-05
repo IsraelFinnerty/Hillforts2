@@ -2,9 +2,6 @@ package com.wit.hillforts.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import org.json.JSONArray
-import org.json.JSONObject
-import java.sql.Array
 
 @Parcelize
 data class HillfortModel(  var id: Long = 0,
