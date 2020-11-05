@@ -1,20 +1,13 @@
 package com.wit.hillforts.activities
 
-import android.app.Activity
-import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 import com.wit.hillforts.R
-import com.wit.hillforts.helpers.readImage
-import com.wit.hillforts.helpers.readImageFromPath
 import com.wit.hillforts.models.HillfortModel
-import kotlinx.android.synthetic.main.activity_hillfort.*
-
 
 interface HillfortListener {
     fun onHillfortClick(hillfort: HillfortModel)
