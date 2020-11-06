@@ -55,6 +55,11 @@ class SettingsActivity: AppCompatActivity() {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
+                R.id.nav_add -> {
+                    startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user),0)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
                 R.id.nav_logout -> {
                     startActivity<LoginActivity>()
                     true
