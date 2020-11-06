@@ -1,4 +1,4 @@
-package com.wit.hillforts.activities.ui.slideshow
+package trash.ui.slideshow
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

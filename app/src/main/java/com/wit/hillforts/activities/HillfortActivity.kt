@@ -19,7 +19,6 @@ import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
 import kotlinx.android.synthetic.main.activity_hillfort.description
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import kotlinx.android.synthetic.main.activity_settings.*
 import org.jetbrains.anko.*
 
 
@@ -71,6 +70,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                 }
                 R.id.nav_settings -> {
                     startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user), 0)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_add -> {
+                    startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user),0)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
