@@ -1,15 +1,14 @@
 package com.wit.hillforts.activities
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.android.synthetic.main.activity_hillfort.*
-import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import com.wit.hillforts.R
 import com.wit.hillforts.helpers.readImage
 import com.wit.hillforts.helpers.readImageFromPath
@@ -17,11 +16,11 @@ import com.wit.hillforts.helpers.showImagePicker
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.Location
 import com.wit.hillforts.models.HillfortModel
-import com.wit.hillforts.models.HillfortStore
 import com.wit.hillforts.models.User
 import kotlinx.android.synthetic.main.activity_hillfort.description
-import kotlinx.android.synthetic.main.card_hillfort.view.*
+import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.*
+
 
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
@@ -34,6 +33,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     val IMAGE_REQUEST3 = 3
     val IMAGE_REQUEST4 = 4
     val LOCATION_REQUEST = 5
+    lateinit var drawerLayout: DrawerLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,9 +47,50 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         }
 
         app = application as MainApp
+
+        drawerLayout = findViewById(R.id.drawer_layout_hillfort)
+
         toolbarAdd.title = title
+        toolbarAdd.setNavigationIcon(R.drawable.ic_baseline_menu_24)
         setSupportActionBar(toolbarAdd)
         info("Hillfort Activity started..")
+
+
+        val check = drawerLayout.isDrawerOpen(GravityCompat.START)
+        toolbarAdd.setNavigationOnClickListener {
+            if (!check) drawerLayout.openDrawer(GravityCompat.START)
+            else  drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+        nav_view_hillfort.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_list -> {
+                    startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                    true
+                }
+                R.id.nav_settings -> {
+                    startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user), 0)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_add -> {
+                    startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user),0)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_logout -> {
+                    startActivity<LoginActivity>()
+                    true
+                }
+                else -> {
+                    if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                        drawer_layout.closeDrawer(GravityCompat.START)
+                    }
+                    false
+                }
+            }
+        }
+
 
         var edit = false
 

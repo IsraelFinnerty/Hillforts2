@@ -6,8 +6,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import org.jetbrains.anko.AnkoLogger
 import com.wit.hillforts.helpers.*
-import org.json.JSONArray
-import org.json.JSONObject
 import java.util.*
 
 val JSON_FILE = "hillforts.json"
@@ -93,6 +91,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
 
     override fun findUserByEmail(email: String): User? {
         for (each in users) {
+
             if (email == each.email) return each
         }
             return null

@@ -5,9 +5,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.wit.hillforts.R
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.User
+import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
@@ -20,6 +23,7 @@ class SettingsActivity: AppCompatActivity() {
 
     lateinit var app: MainApp
     var user = User()
+    lateinit var drawerLayout: DrawerLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +31,47 @@ class SettingsActivity: AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         app = application as MainApp
+        drawerLayout = findViewById(R.id.drawer_layout_settings)
         toolbarSettings.title = title
+        toolbarSettings.setNavigationIcon(R.drawable.ic_baseline_menu_24)
+
         setSupportActionBar(toolbarSettings)
+
+
+        val check = drawerLayout.isDrawerOpen(GravityCompat.START)
+        toolbarSettings.setNavigationOnClickListener {
+            if (!check) drawerLayout.openDrawer(GravityCompat.START)
+            else  drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+        nav_view_settings.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_list -> {
+                    startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                    true
+                }
+                R.id.nav_settings -> {
+                    startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user), 0)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_add -> {
+                    startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user),0)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_logout -> {
+                    startActivity<LoginActivity>()
+                    true
+                }
+                else -> {
+                    if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+                        drawer_layout.closeDrawer(GravityCompat.START)
+                    }
+                    false
+                }
+            }
+        }
 
         if (intent.hasExtra("User"))
         {
