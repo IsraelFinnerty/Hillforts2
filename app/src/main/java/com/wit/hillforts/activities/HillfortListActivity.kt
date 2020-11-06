@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.intentFor
 import com.wit.hillforts.R
@@ -15,8 +14,6 @@ import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
 import kotlinx.android.synthetic.main.activity_hillfort_list.drawer_layout
-import kotlinx.android.synthetic.main.activity_nav_drawer.*
-import kotlinx.android.synthetic.main.activity_settings.*
 import org.jetbrains.anko.startActivity
 
 

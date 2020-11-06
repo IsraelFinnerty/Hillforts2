@@ -19,7 +19,6 @@ import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
 import kotlinx.android.synthetic.main.activity_hillfort.description
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import kotlinx.android.synthetic.main.activity_settings.*
 import org.jetbrains.anko.*
 
 
