@@ -144,6 +144,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         button_visited.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 date_visited.setVisibility(View.VISIBLE)
+                
                 date_title.setVisibility(View.VISIBLE)
                 hillfort.visited = true
             }

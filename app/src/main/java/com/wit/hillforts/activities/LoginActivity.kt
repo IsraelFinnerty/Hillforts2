@@ -1,6 +1,7 @@
 package com.wit.hillforts.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.wit.hillforts.R
 import com.wit.hillforts.main.MainApp
@@ -22,6 +23,7 @@ class LoginActivity: AppCompatActivity() {
         app = application as MainApp
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
+        progressBar.visibility = View.GONE
 
 
         btnLogin.setOnClickListener() {
@@ -38,4 +40,6 @@ class LoginActivity: AppCompatActivity() {
             startActivityForResult(intentFor<SignupActivity>(), 0)
         }
     }
+
+
 }
