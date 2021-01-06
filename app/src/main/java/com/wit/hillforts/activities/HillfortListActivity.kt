@@ -62,7 +62,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener   {
                     true
                 }
                 R.id.nav_add -> {
-                    startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user),0)
+                    startActivityForResult(intentFor<HillfortView>().putExtra("User", user),0)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
@@ -90,7 +90,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener   {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
-            R.id.item_add -> startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user),0)
+            R.id.item_add -> startActivityForResult(intentFor<HillfortView>().putExtra("User", user),0)
             R.id.item_settings -> startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user),0)
             R.id.item_logout -> startActivity<LoginActivity>()
             }
@@ -100,7 +100,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener   {
 
 
     override fun onHillfortClick(hillfort: HillfortModel) {
-        startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user).putExtra("hillfort_edit", hillfort), 0)
+        startActivityForResult(intentFor<HillfortView>().putExtra("User", user).putExtra("hillfort_edit", hillfort), 0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

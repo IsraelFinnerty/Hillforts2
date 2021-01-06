@@ -56,7 +56,7 @@ class SettingsActivity: AppCompatActivity() {
                     true
                 }
                 R.id.nav_add -> {
-                    startActivityForResult(intentFor<HillfortActivity>().putExtra("User", user),0)
+                    startActivityForResult(intentFor<HillfortView>().putExtra("User", user),0)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
