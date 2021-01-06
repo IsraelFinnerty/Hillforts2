@@ -40,7 +40,7 @@ class SignupActivity: AppCompatActivity() {
             else if (isEmailValid(user.email) == false) toast(getString(R.string.email_invalid))
             else {
                 app.users.createUser(user.copy())
-                startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
             }
         }
     }

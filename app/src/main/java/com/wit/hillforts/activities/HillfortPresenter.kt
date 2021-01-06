@@ -65,7 +65,7 @@ class HillfortPresenter(val view: HillfortView) {
             view.info("add Button Pressed: ${hillfort}")
             view.setResult(AppCompatActivity.RESULT_OK)
             view.startActivityForResult(
-                view.intentFor<HillfortListActivity>().putExtra("User", user), 0
+                view.intentFor<HillfortListView>().putExtra("User", user), 0
             )
         } else {
             view.toast(view.getString(R.string.enter_title))

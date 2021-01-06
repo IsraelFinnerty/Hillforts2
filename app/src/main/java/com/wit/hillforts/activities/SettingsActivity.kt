@@ -47,7 +47,7 @@ class SettingsActivity: AppCompatActivity() {
         nav_view_settings.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_list -> {
-                    startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                    startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
                     true
                 }
                 R.id.nav_settings -> {
@@ -133,7 +133,7 @@ class SettingsActivity: AppCompatActivity() {
             else if (isEmailValid(user.email) == false) toast(getString(R.string.email_invalid))
             else {
                 app.users.updateUser(user.copy())
-                startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
             }
         }
 

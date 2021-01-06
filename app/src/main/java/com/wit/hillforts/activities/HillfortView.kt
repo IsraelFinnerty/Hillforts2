@@ -84,7 +84,7 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         nav_view_hillfort.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_list -> {
-                    startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                    startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
                     true
                 }
                 R.id.nav_settings -> {
@@ -125,7 +125,7 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
             R.id.item_cancel -> finish()
             R.id.item_delete -> {
                 app.users.delete(hillfort, user)
-                startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
             }
             R.id.item_logout -> startActivity<LoginActivity>()
 

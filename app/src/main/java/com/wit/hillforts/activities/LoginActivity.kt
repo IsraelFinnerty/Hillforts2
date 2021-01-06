@@ -31,7 +31,7 @@ class LoginActivity: AppCompatActivity() {
             if (currentUser == null) toast(getString(R.string.email_not_found))
             else {
                 user = currentUser
-                if (password.text.toString() == user.password)  startActivityForResult( intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                if (password.text.toString() == user.password)  startActivityForResult( intentFor<HillfortListView>().putExtra("User", user), 0)
                 else toast(getString(R.string.incorrect_password))
             }
         }

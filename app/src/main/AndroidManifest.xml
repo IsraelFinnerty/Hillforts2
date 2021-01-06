@@ -17,7 +17,7 @@
             android:label="@string/title_activity_nav_drawer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activities.HillfortView" />
-        <activity android:name=".activities.HillfortListActivity" />
+        <activity android:name=".activities.HillfortListView" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.SignupActivity" />
         <activity android:name=".activities.SettingsActivity" />
