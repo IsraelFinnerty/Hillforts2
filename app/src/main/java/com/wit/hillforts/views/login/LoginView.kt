@@ -1,20 +1,21 @@
-package com.wit.hillforts.activities
+package com.wit.hillforts.views.login
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.wit.hillforts.R
+import com.wit.hillforts.views.signup.SignupView
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.User
+import com.wit.hillforts.views.hillfortlist.HillfortListView
 import kotlinx.android.synthetic.main.activity_hillfort.toolbarAdd
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.*
 
-class LoginActivity: AppCompatActivity() {
+class LoginView: AppCompatActivity() {
 
     lateinit var app: MainApp
     var user = User()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class LoginActivity: AppCompatActivity() {
         }
 
         btnSignup.setOnClickListener() {
-            startActivityForResult(intentFor<SignupActivity>(), 0)
+            startActivityForResult(intentFor<SignupView>(), 0)
         }
     }
 

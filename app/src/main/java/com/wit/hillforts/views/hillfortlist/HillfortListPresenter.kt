@@ -1,5 +1,8 @@
-package com.wit.hillforts.activities
+package com.wit.hillforts.views.hillfortlist
 
+import com.wit.hillforts.views.hillfort.HillfortView
+import com.wit.hillforts.views.login.LoginView
+import com.wit.hillforts.views.settings.SettingsView
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
@@ -42,11 +45,11 @@ class HillfortListPresenter(val view: HillfortListView) {
     }
 
     fun doShowSettings() {
-        view.startActivityForResult(view.intentFor<SettingsActivity>().putExtra("User", user),0)
+        view.startActivityForResult(view.intentFor<SettingsView>().putExtra("User", user),0)
     }
 
     fun doLogout() {
-        view.startActivity<LoginActivity>()
+        view.startActivity<LoginView>()
     }
 
 }

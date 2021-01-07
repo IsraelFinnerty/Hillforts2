@@ -1,4 +1,4 @@
-package com.wit.hillforts.activities
+package com.wit.hillforts.views.hillfortlist
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,11 +13,14 @@ import com.wit.hillforts.R
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
+import com.wit.hillforts.views.hillfort.HillfortView
+import com.wit.hillforts.views.login.LoginView
+import com.wit.hillforts.views.settings.SettingsView
 import kotlinx.android.synthetic.main.activity_hillfort_list.drawer_layout
 import org.jetbrains.anko.startActivity
 
 
-class HillfortListView : AppCompatActivity(), HillfortListener   {
+class HillfortListView : AppCompatActivity(), HillfortListener {
 
     lateinit var app: MainApp
     lateinit var drawerLayout: DrawerLayout
@@ -61,7 +64,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener   {
                     true
                 }
                 R.id.nav_settings -> {
-                    startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user), 0)
+                    startActivityForResult(intentFor<SettingsView>().putExtra("User", user), 0)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
@@ -71,7 +74,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener   {
                     true
                 }
                 R.id.nav_logout -> {
-                    startActivity<LoginActivity>()
+                    startActivity<LoginView>()
                     true
                 }
                 else -> {

@@ -1,16 +1,18 @@
-package com.wit.hillforts.activities
+package com.wit.hillforts.views.hillfort
 
 import android.content.Intent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.wit.hillforts.R
+import com.wit.hillforts.views.map.MapView
 import com.wit.hillforts.helpers.readImage
 import com.wit.hillforts.helpers.showImagePicker
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.Location
 import com.wit.hillforts.models.User
+import com.wit.hillforts.views.hillfortlist.HillfortListView
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
@@ -96,7 +98,7 @@ class HillfortPresenter(val view: HillfortView) {
             location.lng = hillfort.lng
             location.zoom = hillfort.zoom
         }
-        view.startActivityForResult(view.intentFor<MapActivity>().putExtra("location", location), LOCATION_REQUEST)
+        view.startActivityForResult(view.intentFor<MapView>().putExtra("location", location), LOCATION_REQUEST)
     }
 
     fun doCheckChange(isChecked: Boolean) {
