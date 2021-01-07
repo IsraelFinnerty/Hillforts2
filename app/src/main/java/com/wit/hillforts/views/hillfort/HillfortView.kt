@@ -1,4 +1,4 @@
-package com.wit.hillforts.activities
+package com.wit.hillforts.views.hillfort
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,10 +10,13 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import com.wit.hillforts.R
+import com.wit.hillforts.views.login.LoginView
+import com.wit.hillforts.views.settings.SettingsView
 import com.wit.hillforts.helpers.readImageFromPath
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
+import com.wit.hillforts.views.hillfortlist.HillfortListView
 import kotlinx.android.synthetic.main.activity_hillfort.description
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortImage
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
@@ -84,11 +87,11 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         nav_view_hillfort.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_list -> {
-                    startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                    startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
                     true
                 }
                 R.id.nav_settings -> {
-                    startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user), 0)
+                    startActivityForResult(intentFor<SettingsView>().putExtra("User", user), 0)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
@@ -98,7 +101,7 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
                     true
                 }
                 R.id.nav_logout -> {
-                    startActivity<LoginActivity>()
+                    startActivity<LoginView>()
                     true
                 }
                 else -> {
@@ -125,9 +128,9 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
             R.id.item_cancel -> finish()
             R.id.item_delete -> {
                 app.users.delete(hillfort, user)
-                startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
             }
-            R.id.item_logout -> startActivity<LoginActivity>()
+            R.id.item_logout -> startActivity<LoginView>()
 
         }
         return super.onOptionsItemSelected(item)

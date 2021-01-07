@@ -16,11 +16,11 @@
             android:name=".activities.NavDrawer"
             android:label="@string/title_activity_nav_drawer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.HillfortView" />
-        <activity android:name=".activities.HillfortListActivity" />
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.SignupActivity" />
-        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".views.hillfort.HillfortView" />
+        <activity android:name=".views.hillfortlist.HillfortListView" />
+        <activity android:name=".views.login.LoginView" />
+        <activity android:name=".views.signup.SignupView" />
+        <activity android:name=".views.settings.SettingsView" />
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.MapActivity"
+            android:name=".views.map.MapView"
             android:label="@string/title_activity_map" />
     </application>
 

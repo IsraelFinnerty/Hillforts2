@@ -7,6 +7,7 @@ import android.os.Handler
 import android.view.Window
 import android.view.WindowManager
 import com.wit.hillforts.R
+import com.wit.hillforts.views.login.LoginView
 
 class SplashActivity : AppCompatActivity() {
 
@@ -18,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
     // Using a handler to delay loading the MainActivity
     Handler().postDelayed({
       // Start activity
-      startActivity(Intent(this, LoginActivity::class.java))
+      startActivity(Intent(this, LoginView::class.java))
       // Animate the loading of new activity
       overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
       // Close this activity
