@@ -16,6 +16,7 @@ import com.wit.hillforts.helpers.readImageFromPath
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
+import com.wit.hillforts.views.BaseView
 import com.wit.hillforts.views.hillfortlist.HillfortListView
 import kotlinx.android.synthetic.main.activity_hillfort.description
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortImage
@@ -24,7 +25,7 @@ import org.jetbrains.anko.*
 
 
 
-class HillfortView : AppCompatActivity(), AnkoLogger {
+class HillfortView :  BaseView(), AnkoLogger {
 
     var hillfort = HillfortModel()
     var user = User()
@@ -54,11 +55,11 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
 
         drawerLayout = findViewById(R.id.drawer_layout_hillfort)
 
-        toolbarAdd.title = title
-        toolbarAdd.setNavigationIcon(R.drawable.ic_baseline_menu_24)
-        setSupportActionBar(toolbarAdd)
+        init(toolbarAdd)
 
-        presenter = HillfortPresenter(this)
+        toolbarAdd.setNavigationIcon(R.drawable.ic_baseline_menu_24)
+
+        presenter = initPresenter( HillfortPresenter(this)) as HillfortPresenter
         info("Hillfort Activity started..")
 
 
@@ -143,7 +144,7 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         }
     }
 
-    fun showHillfort(hillfort: HillfortModel){
+    override fun showHillfort(hillfort: HillfortModel){
         hillfortName.setText(hillfort.name)
         description.setText(hillfort.description)
         notes.setText(hillfort.notes)
