@@ -101,6 +101,7 @@ class HillfortListView : BaseView(), HillfortListener {
             R.id.item_add -> presenter.doAddHillfort()
             R.id.item_settings -> presenter.doShowSettings()
             R.id.item_logout -> presenter.doLogout()
+            R.id.item_fav -> presenter.doFav()
             }
         return super.onOptionsItemSelected(item)
     }

@@ -18,7 +18,7 @@ class SignupPresenter(var view: SignupView) {
     }
 
     fun doNewSignup() {
-        var emailUsed = app.users.findUserByEmail(view.signup_email.text.toString())
+       // var emailUsed = app.users.findUserByEmail(view.signup_email.text.toString())
         user.name = view.signup_name.text.toString()
         user.year = view.signup_year.text.toString().toInt()
         user.email = view.signup_email.text.toString()
@@ -28,10 +28,10 @@ class SignupPresenter(var view: SignupView) {
         else if (user.password.isEmpty()) view.toast(view.getString(R.string.enter_password))
         else if (user.password.length < 8) view.toast(view.getString(R.string.short_password))
         else if (user.year == 0) view.toast(view.getString(R.string.enter_year))
-        else if (emailUsed != null) view.toast(view.getString(R.string.email_used))
+       // else if (emailUsed != null) view.toast(view.getString(R.string.email_used))
         else if (isEmailValid(user.email) == false) view.toast(view.getString(R.string.email_invalid))
         else {
-            app.users.createUser(user.copy())
+        //    app.users.createUser(user.copy())
             view.startActivityForResult(view.intentFor<HillfortListView>().putExtra("User", user), 0)
         }
     }

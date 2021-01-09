@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class HillfortModel(  var id: Long = 0,
+data class HillfortModel(   var id: Long = 0,
+                            var userId : String = "",
                             var fbId : String = "",
                             var name: String = "",
                             var description: String = "",
@@ -13,6 +14,7 @@ data class HillfortModel(  var id: Long = 0,
                             var image3: String = "",
                             var image4: String = "",
                             var visited: Boolean = false,
+                            var fav: Boolean = false,
                             var notes: String = "",
                             var dateVisitedYear: Int = 2020,
                             var dateVisitedMonth: Int = 9,

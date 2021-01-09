@@ -29,7 +29,6 @@ class HillfortView :  BaseView(), AnkoLogger {
 
     var hillfort = HillfortModel()
     var user = User()
-    lateinit var app: MainApp
     val IMAGE_REQUEST1 = 1
     val IMAGE_REQUEST2 = 2
     val IMAGE_REQUEST3 = 3
@@ -51,7 +50,7 @@ class HillfortView :  BaseView(), AnkoLogger {
             user = intent.extras?.getParcelable<User>("User")!!
         }
 
-        app = application as MainApp
+
 
         drawerLayout = findViewById(R.id.drawer_layout_hillfort)
 

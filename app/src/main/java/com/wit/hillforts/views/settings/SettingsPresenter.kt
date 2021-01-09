@@ -32,7 +32,7 @@ class SettingsPresenter(var view: SettingsView) {
         if (view.intent.hasExtra("User"))
         {
             val currentUser = view.intent.extras?.getParcelable<User>("User")!!
-            user = app.statususers.findUserByEmail(currentUser.email)!!
+            // user = app.statususers.findUserByEmail(currentUser.email)!!
         }
 
        // navDrawer = NavDrawer()
@@ -71,7 +71,7 @@ class SettingsPresenter(var view: SettingsView) {
     }
 
     fun doClickListener() {
-        var emailUsed = app.users.findUserByEmail(view.updateEmail.text.toString())
+      //  var emailUsed = app.users.findUserByEmail(view.updateEmail.text.toString())
         var previousEmail = user.email
         user.name = view.updateName.text.toString()
         user.year = view.updateYear.text.toString().toInt()
@@ -82,10 +82,10 @@ class SettingsPresenter(var view: SettingsView) {
         else if (user.password.isEmpty()) view.toast(view.getString(R.string.enter_password))
         else if (user.password.length < 8) view.toast(view.getString(R.string.short_password))
         else if (user.year == 0 || user.year > 4) view.toast(view.getString(R.string.enter_year))
-        else if (emailUsed != null && emailUsed.email != previousEmail) view.toast(view.getString(R.string.email_used)) // checks for email use on other accounts
+      //  else if (emailUsed != null && emailUsed.email != previousEmail) view.toast(view.getString(R.string.email_used)) // checks for email use on other accounts
         else if (isEmailValid(user.email) == false) view.toast(view.getString(R.string.email_invalid))
         else {
-            app.users.updateUser(user.copy())
+           // app.users.updateUser(user.copy())
             view.startActivityForResult(view.intentFor<HillfortListView>().putExtra("User", user), 0)
         }
     }

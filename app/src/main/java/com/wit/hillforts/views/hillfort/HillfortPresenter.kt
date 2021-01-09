@@ -14,6 +14,7 @@ import com.wit.hillforts.models.Location
 import com.wit.hillforts.models.User
 import com.wit.hillforts.views.BasePresenter
 import com.wit.hillforts.views.BaseView
+import com.wit.hillforts.views.VIEW
 import com.wit.hillforts.views.hillfortlist.HillfortListView
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.*
@@ -33,17 +34,15 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
 
     init {
-
         if (view.intent.hasExtra("hillfort_edit")) {
             edit = true
             hillfort = view.intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
             view.showHillfort(hillfort)
-        }
-
-        if (view.intent.hasExtra("User"))
-        {
-            user = view.intent.extras?.getParcelable<User>("User")!!
-        }
+        } // else {
+           // if (checkLocationPermissions(view)) {
+            //    doSetCurrentLocation()
+           // }
+       // }
     }
 
     fun doAddOrSave(
@@ -69,11 +68,10 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
                 }
                 uiThread { view?.finish() }
             }
-            view?.info("add Button Pressed: ${hillfort}")
-            view?.setResult(AppCompatActivity.RESULT_OK)
-            view?.startActivityForResult(
-                view!!.intentFor<HillfortListView>().putExtra("User", user), 0
-            )
+          //  view?.info("add Button Pressed: ${hillfort}")
+           // view?.setResult(AppCompatActivity.RESULT_OK)
+            view?.navigateTo(VIEW.LIST)
+
         } else {
             view?.toast(R.string.enter_title)
         }

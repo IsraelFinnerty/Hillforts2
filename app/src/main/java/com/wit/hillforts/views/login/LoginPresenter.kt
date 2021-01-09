@@ -30,13 +30,16 @@ class LoginPresenter(view: BaseView) : BasePresenter(view) {
             if (task.isSuccessful) {
                 if (fireStore != null) {
                     fireStore!!.fetchHillforts {
-                        view?.hideProgress()
+                     //   view?.hideProgress()
                         view?.navigateTo(VIEW.LIST)
                     }
                 } else {
-                    view?.toast("Sign Up Failed: ${task.exception?.message}")
+                 //   view?.hideProgress()
+                    view?.navigateTo(VIEW.LIST)
                 }
+            } else {
                 view?.hideProgress()
+                view?.toast("Log in Failed: ${task.exception?.message}")
             }
         }
     }
