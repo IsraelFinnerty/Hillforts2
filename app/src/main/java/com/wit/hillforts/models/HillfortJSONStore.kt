@@ -15,7 +15,7 @@ val listType = object : TypeToken<java.util.ArrayList<User>>() {}.type
 fun generateRandomId(): Long {
     return Random().nextLong()
 }
-
+/*
 class HillfortJSONStore : HillfortStore, AnkoLogger {
 
     val context: Context
@@ -62,6 +62,10 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             currentUser.password = user.password
         }
         serialize()
+    }
+
+    override fun clear() {
+
     }
 
 
@@ -221,3 +225,4 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
 
 }
 
+*/

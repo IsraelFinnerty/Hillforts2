@@ -1,46 +1,47 @@
 package com.wit.hillforts.views.login
 
 import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.wit.hillforts.R
-import com.wit.hillforts.views.signup.SignupView
-import com.wit.hillforts.main.MainApp
-import com.wit.hillforts.models.User
-import com.wit.hillforts.views.hillfortlist.HillfortListView
-import kotlinx.android.synthetic.main.activity_hillfort.toolbarAdd
+import com.wit.hillforts.views.BaseView
+import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_signup.*
 import org.jetbrains.anko.*
 
-class LoginView: AppCompatActivity() {
 
-    lateinit var app: MainApp
-    var user = User()
+
+class LoginView : BaseView() {
+
+    lateinit var presenter: LoginPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+      //  toolbarAdd.title = title
+       // setSupportActionBar(toolbarAdd)
 
-        app = application as MainApp
-        toolbarAdd.title = title
-        setSupportActionBar(toolbarAdd)
-        progressBar.visibility = View.GONE
+        presenter = initPresenter(LoginPresenter(this)) as LoginPresenter
 
-
-        btnLogin.setOnClickListener() {
-            var currentUser = app.users.findUserByEmail(email.text.toString())
-            if (currentUser == null) toast(getString(R.string.email_not_found))
+        signUp.setOnClickListener {
+            val email = email.text.toString()
+            val password = password.text.toString()
+            if (email == "" || password == "") {
+                toast("Please provide email + password")
+            }
             else {
-                user = currentUser
-                if (password.text.toString() == user.password)  startActivityForResult( intentFor<HillfortListView>().putExtra("User", user), 0)
-                else toast(getString(R.string.incorrect_password))
+                presenter.doSignUp(email,password)
             }
         }
 
-        btnSignup.setOnClickListener() {
-            startActivityForResult(intentFor<SignupView>(), 0)
+        logIn.setOnClickListener {
+            val email = email.text.toString()
+            val password = password.text.toString()
+            if (email == "" || password == "") {
+                toast("Please provide email + password")
+            }
+            else {
+                presenter.doLogin(email,password)
+            }
         }
     }
-
-
 }

@@ -16,9 +16,7 @@ import com.wit.hillforts.views.BasePresenter
 import com.wit.hillforts.views.BaseView
 import com.wit.hillforts.views.hillfortlist.HillfortListView
 import kotlinx.android.synthetic.main.activity_hillfort.*
-import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 
 
 class HillfortPresenter(view: BaseView) : BasePresenter(view) {
@@ -63,9 +61,14 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
         hillfort.dateVisitedMonth = month
         hillfort.dateVisitedDay = dayOfMonth
         if (hillfort.name.isNotEmpty()) {
-            if (edit) {
-                app.users.update(hillfort.copy(), user)
-            } else app.users.create(hillfort.copy(), user)
+            doAsync {
+                if (edit) {
+                    app.hillforts.update(hillfort)
+                } else {
+                    app.hillforts.create(hillfort)
+                }
+                uiThread { view?.finish() }
+            }
             view?.info("add Button Pressed: ${hillfort}")
             view?.setResult(AppCompatActivity.RESULT_OK)
             view?.startActivityForResult(
@@ -101,6 +104,15 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
             location.zoom = hillfort.zoom
         }
         view?.startActivityForResult(view?.intentFor<MapView>()!!.putExtra("location", location), LOCATION_REQUEST)
+    }
+
+    fun doDelete() {
+        doAsync {
+            app.hillforts.delete(hillfort)
+            uiThread {
+                view?.finish()
+            }
+        }
     }
 
     fun doCheckChange(isChecked: Boolean) {

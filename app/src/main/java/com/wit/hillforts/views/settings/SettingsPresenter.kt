@@ -32,7 +32,7 @@ class SettingsPresenter(var view: SettingsView) {
         if (view.intent.hasExtra("User"))
         {
             val currentUser = view.intent.extras?.getParcelable<User>("User")!!
-            user = app.users.findUserByEmail(currentUser.email)!!
+            user = app.statususers.findUserByEmail(currentUser.email)!!
         }
 
        // navDrawer = NavDrawer()

@@ -128,7 +128,7 @@ class HillfortView :  BaseView(), AnkoLogger {
         when (item?.itemId) {
             R.id.item_cancel -> finish()
             R.id.item_delete -> {
-                app.users.delete(hillfort, user)
+                presenter.doDelete()
                 startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
             }
             R.id.item_logout -> startActivity<LoginView>()
@@ -136,6 +136,8 @@ class HillfortView :  BaseView(), AnkoLogger {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
