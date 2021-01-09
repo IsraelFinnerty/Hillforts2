@@ -23,6 +23,12 @@
         android:title="@string/menu_logout"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/item_fav"
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
+        android:title="@string/fav_title"
+        app:showAsAction="always" />
+
 
 </menu>
 

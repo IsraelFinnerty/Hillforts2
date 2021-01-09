@@ -1,4 +1,4 @@
-package com.wit.hillforts.activities
+package com.wit.hillforts.views.hillfort
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,10 +10,14 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import com.wit.hillforts.R
+import com.wit.hillforts.views.login.LoginView
+import com.wit.hillforts.views.settings.SettingsView
 import com.wit.hillforts.helpers.readImageFromPath
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
+import com.wit.hillforts.views.BaseView
+import com.wit.hillforts.views.hillfortlist.HillfortListView
 import kotlinx.android.synthetic.main.activity_hillfort.description
 import kotlinx.android.synthetic.main.activity_hillfort.hillfortImage
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
@@ -21,11 +25,10 @@ import org.jetbrains.anko.*
 
 
 
-class HillfortView : AppCompatActivity(), AnkoLogger {
+class HillfortView :  BaseView(), AnkoLogger {
 
     var hillfort = HillfortModel()
     var user = User()
-    lateinit var app: MainApp
     val IMAGE_REQUEST1 = 1
     val IMAGE_REQUEST2 = 2
     val IMAGE_REQUEST3 = 3
@@ -47,15 +50,15 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
             user = intent.extras?.getParcelable<User>("User")!!
         }
 
-        app = application as MainApp
+
 
         drawerLayout = findViewById(R.id.drawer_layout_hillfort)
 
-        toolbarAdd.title = title
-        toolbarAdd.setNavigationIcon(R.drawable.ic_baseline_menu_24)
-        setSupportActionBar(toolbarAdd)
+        init(toolbarAdd)
 
-        presenter = HillfortPresenter(this)
+        toolbarAdd.setNavigationIcon(R.drawable.ic_baseline_menu_24)
+
+        presenter = initPresenter( HillfortPresenter(this)) as HillfortPresenter
         info("Hillfort Activity started..")
 
 
@@ -84,11 +87,11 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         nav_view_hillfort.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_list -> {
-                    startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                    startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
                     true
                 }
                 R.id.nav_settings -> {
-                    startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user), 0)
+                    startActivityForResult(intentFor<SettingsView>().putExtra("User", user), 0)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
@@ -98,7 +101,7 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
                     true
                 }
                 R.id.nav_logout -> {
-                    startActivity<LoginActivity>()
+                    startActivity<LoginView>()
                     true
                 }
                 else -> {
@@ -124,14 +127,16 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         when (item?.itemId) {
             R.id.item_cancel -> finish()
             R.id.item_delete -> {
-                app.users.delete(hillfort, user)
-                startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                presenter.doDelete()
+                startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
             }
-            R.id.item_logout -> startActivity<LoginActivity>()
+            R.id.item_logout -> startActivity<LoginView>()
 
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -140,7 +145,7 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         }
     }
 
-    fun showHillfort(hillfort: HillfortModel){
+    override fun showHillfort(hillfort: HillfortModel){
         hillfortName.setText(hillfort.name)
         description.setText(hillfort.description)
         notes.setText(hillfort.notes)

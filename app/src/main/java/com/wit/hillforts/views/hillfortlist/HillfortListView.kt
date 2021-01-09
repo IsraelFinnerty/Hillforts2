@@ -1,4 +1,4 @@
-package com.wit.hillforts.activities
+package com.wit.hillforts.views.hillfortlist
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,15 +13,21 @@ import com.wit.hillforts.R
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
+import com.wit.hillforts.views.BaseView
+import com.wit.hillforts.views.hillfort.HillfortView
+import com.wit.hillforts.views.login.LoginView
+import com.wit.hillforts.views.settings.SettingsView
 import kotlinx.android.synthetic.main.activity_hillfort_list.drawer_layout
 import org.jetbrains.anko.startActivity
 
 
-class HillfortListActivity : AppCompatActivity(), HillfortListener   {
+class HillfortListView : BaseView(), HillfortListener {
 
     lateinit var app: MainApp
     lateinit var drawerLayout: DrawerLayout
     var user = User()
+
+    lateinit var presenter: HillfortListPresenter
 
 
 
@@ -41,6 +47,8 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener   {
 
         setSupportActionBar(toolbar)
 
+        presenter = HillfortListPresenter(this)
+
         val check = drawerLayout.isDrawerOpen(GravityCompat.START)
         toolbar.setNavigationOnClickListener {
             if (!check) drawerLayout.openDrawer(GravityCompat.START)
@@ -53,11 +61,11 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener   {
         nav_view.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_list -> {
-                    startActivityForResult(intentFor<HillfortListActivity>().putExtra("User", user), 0)
+                    startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
                     true
                 }
                 R.id.nav_settings -> {
-                    startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user), 0)
+                    startActivityForResult(intentFor<SettingsView>().putExtra("User", user), 0)
                     drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
@@ -67,7 +75,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener   {
                     true
                 }
                 R.id.nav_logout -> {
-                    startActivity<LoginActivity>()
+                    startActivity<LoginView>()
                     true
                 }
                 else -> {
@@ -80,7 +88,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener   {
         }
 
 
-        loadHillforts(user)
+        presenter.loadHillforts()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -90,9 +98,10 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener   {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
-            R.id.item_add -> startActivityForResult(intentFor<HillfortView>().putExtra("User", user),0)
-            R.id.item_settings -> startActivityForResult(intentFor<SettingsActivity>().putExtra("User", user),0)
-            R.id.item_logout -> startActivity<LoginActivity>()
+            R.id.item_add -> presenter.doAddHillfort()
+            R.id.item_settings -> presenter.doShowSettings()
+            R.id.item_logout -> presenter.doLogout()
+            R.id.item_fav -> presenter.doFav()
             }
         return super.onOptionsItemSelected(item)
     }
@@ -100,23 +109,19 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener   {
 
 
     override fun onHillfortClick(hillfort: HillfortModel) {
-        startActivityForResult(intentFor<HillfortView>().putExtra("User", user).putExtra("hillfort_edit", hillfort), 0)
+        presenter.doEditHillfort(hillfort)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        loadHillforts(user)
+        presenter.loadHillforts()
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun loadHillforts(user: User) {
-        val currentUser = app.users.findUserByEmail(user.email)
-        if (currentUser != null) showHillfort(currentUser.hillforts)
-    }
-
-    fun showHillfort (hillforts: List<HillfortModel>) {
+   override fun showHillforts (hillforts: List<HillfortModel>) {
         recyclerView.adapter = HillfortAdapter(hillforts, this)
         recyclerView.adapter?.notifyDataSetChanged()
     }
+
 }
 
 
