@@ -13,6 +13,7 @@ import com.wit.hillforts.R
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
+import com.wit.hillforts.views.BaseView
 import com.wit.hillforts.views.hillfort.HillfortView
 import com.wit.hillforts.views.login.LoginView
 import com.wit.hillforts.views.settings.SettingsView
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_hillfort_list.drawer_layout
 import org.jetbrains.anko.startActivity
 
 
-class HillfortListView : AppCompatActivity(), HillfortListener {
+class HillfortListView : BaseView(), HillfortListener {
 
     lateinit var app: MainApp
     lateinit var drawerLayout: DrawerLayout
@@ -87,7 +88,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
         }
 
 
-        presenter.getHillforts(user)
+        presenter.loadHillforts()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -100,6 +101,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
             R.id.item_add -> presenter.doAddHillfort()
             R.id.item_settings -> presenter.doShowSettings()
             R.id.item_logout -> presenter.doLogout()
+            R.id.item_fav -> presenter.doFav()
             }
         return super.onOptionsItemSelected(item)
     }
@@ -111,8 +113,13 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        presenter.getHillforts(user)
+        presenter.loadHillforts()
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+   override fun showHillforts (hillforts: List<HillfortModel>) {
+        recyclerView.adapter = HillfortAdapter(hillforts, this)
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
 }
