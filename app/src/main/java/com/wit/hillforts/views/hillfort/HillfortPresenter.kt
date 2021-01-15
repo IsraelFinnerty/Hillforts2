@@ -71,9 +71,8 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
                 }
                 uiThread {
                     view!!.intent.removeExtra("Fav")
-                    fireStore!!.fetchHillforts {
-                        view?.navigateTo(VIEW.LIST)
-                    }
+                    view?.navigateTo(VIEW.LIST)
+
                 }
             }
             /*
@@ -81,11 +80,11 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
             view?.setResult(AppCompatActivity.RESULT_OK)
             */
-            view!!.intent.removeExtra("Fav")
+          /*  view!!.intent.removeExtra("Fav")
             fireStore!!.fetchHillforts {
                 //   view?.hideProgress()
                 view?.navigateTo(VIEW.LIST)
-            }
+            }*/
 
         } else {
             view?.toast(R.string.enter_title)

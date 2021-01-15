@@ -32,6 +32,7 @@
     <string name="signup_title">Signup</string>
     <string name="fav_title">Favourites</string>
     <string name="fav_name">Favourite</string>
+    <string name="save">Save</string>
     <string name="rating">Rating</string>
     <string name="title_activity_login"> Signup/Login to Hillfort</string>
     <string name="settings_title">Update Details</string>

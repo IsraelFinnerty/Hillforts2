@@ -142,6 +142,7 @@ class HillfortView :  BaseView(), AnkoLogger {
                 startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
             }
             R.id.item_logout -> startActivity<LoginView>()
+            R.id.item_save ->  presenter.doAddOrSave(hillfortName.text.toString(), description.text.toString(), notes.text.toString(), date_visited.year, date_visited.month, date_visited.dayOfMonth   )
 
         }
         return super.onOptionsItemSelected(item)
