@@ -17,7 +17,7 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
 
     var user = User()
-    var fav = false
+    var favCheck = false
     init {
 
 
@@ -26,7 +26,7 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
         }
 
         if (view.intent.hasExtra("Fav")) {
-            fav = true
+            favCheck = true
         }
     }
 
@@ -35,7 +35,7 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
                 val hillforts = app.hillforts.findAll()
                 var favHillforts = mutableListOf<HillfortModel>()
                 uiThread {
-                    if (fav) {
+                    if (favCheck) {
                         for (element in hillforts) {
                             if (element.fav == true) {
                                 favHillforts.add(element)
@@ -52,19 +52,17 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
     fun doAddHillfort() {
         view?.navigateTo(VIEW.HILLFORT, 0, "User", user)
-    // startActivityForResult(view?.intentFor<HillfortView>().putExtra("User", user),0)
+
         }
 
 
     fun doEditHillfort(hillfort: HillfortModel) {
         view?.navigateTo(VIEW.HILLFORT, 0, "hillfort_edit", hillfort)
-        //startActivityForResult(view?.intentFor<HillfortView>().putExtra("User", user).putExtra("hillfort_edit", hillfort), 0)
-    }
+           }
 
     fun doShowSettings() {
         view?.navigateTo(VIEW.SETTINGS, 0, "User", user)
-        //startActivityForResult(view?.intentFor<SettingsView>().putExtra("User", user),0)
-    }
+          }
 
     fun doFav()
     {

@@ -7,4 +7,5 @@ interface HillfortStore {
     fun update(hillfort: HillfortModel)
     fun delete(hillfort: HillfortModel)
     fun clear()
+    fun seed()
 }
