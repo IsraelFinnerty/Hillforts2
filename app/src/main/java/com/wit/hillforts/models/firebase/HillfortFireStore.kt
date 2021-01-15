@@ -35,6 +35,7 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
     override fun create(hillfort: HillfortModel) {
         db = FirebaseDatabase.getInstance().reference
         userId = FirebaseAuth.getInstance().currentUser!!.uid
+        st = FirebaseStorage.getInstance().reference
         val key = db.child("users").child(userId).child("hillforts").push().key
         key?.let {
             hillfort.fbId = key
@@ -106,8 +107,8 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
             ,visited = false
             ,notes = ""
             ,id = generateRandomId()
-            ,image1 = "downeen"
-            ,image2 = "downeenmap"
+            ,image1 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fdowneen.jpg?alt=media&token=68d1310e-b9cc-4a29-b98d-a4a6a56d8165"
+            ,image2 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fdowneenmap.png?alt=media&token=b359d0da-39db-4dae-876d-266f35d29ea2"
             ,image3 = ""
             ,image4 = ""
 
@@ -122,8 +123,8 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
             ,visited = false
             ,notes = ""
             ,id = generateRandomId()
-            ,image1 = "dundeady"
-            ,image2 = "dundeadymap"
+            ,image1 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fdundeady.jpg?alt=media&token=f01a4550-be58-493b-bb94-44ab31a94099"
+            ,image2 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fdundeadymap.png?alt=media&token=6f2a5ac6-80e6-4d7a-b4f6-d086bce6136b"
             ,image3 = ""
             ,image4 = ""
 
@@ -139,8 +140,8 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
             ,visited = false
             ,notes = ""
             ,id = generateRandomId()
-            ,image1 = "donoure"
-            ,image2 = "donouremap"
+            ,image1 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fdonoure.png?alt=media&token=5e6f1cfd-c7b3-4495-a25a-82d723c43b9b"
+            ,image2 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fdonouremap.png?alt=media&token=67377583-3802-48ef-87bc-cf9db92921ea"
             ,image3 = ""
             ,image4 = ""
         )
@@ -154,8 +155,8 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
             ,visited = false
             ,notes = ""
             ,id = generateRandomId()
-            ,image1 = "reenogrena"
-            ,image2 = "reenogrenamap"
+            ,image1 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Freenogrena.png?alt=media&token=a417d112-2f16-44e1-8371-768aeb8e2d5c"
+            ,image2 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Freenogrenamap.png?alt=media&token=6db7b65e-310a-42ed-a540-9782959269a5"
             ,image3 = ""
             ,image4 = ""
         )
@@ -169,8 +170,8 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
             ,visited = false
             ,notes = ""
             ,id = generateRandomId()
-            ,image1 = "carrigillihy"
-            ,image2 = "carrigillihymap"
+            ,image1 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fcarrigillihy.jpg?alt=media&token=50bbc967-2e8c-49cf-9626-93218a428a1f"
+            ,image2 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fcarrigillihymap.png?alt=media&token=9086f6a2-60a2-4c13-9713-7704796ce7f4"
             ,image3 = ""
             ,image4 = ""
         )
@@ -184,8 +185,8 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
             ,visited = false
             ,notes = ""
             ,id = generateRandomId()
-            ,image1 = "moyross"
-            ,image2 = "moyrossmap"
+            ,image1 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fmoyross.png?alt=media&token=094a0d1c-f3d7-4f78-ad54-9fcdf3672943"
+            ,image2 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fmoyrossmap.png?alt=media&token=ce95fa62-915c-417a-a60c-7e4a97e4b6d5"
             ,image3 = ""
             ,image4 = ""
         )
@@ -199,8 +200,8 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
             ,visited = false
             ,notes = ""
             ,id = generateRandomId()
-            ,image1 = "reen"
-            ,image2 = "reenmap"
+            ,image1 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Freen.png?alt=media&token=a51231c4-1b0f-47af-9154-a9d46065536d"
+            ,image2 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Freenmap.png?alt=media&token=4bc965d4-1158-4663-9921-fef818858882"
             ,image3 = ""
             ,image4 = ""
         )
@@ -214,8 +215,8 @@ class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
             ,visited = false
             ,notes = ""
             ,id = generateRandomId()
-            ,image1 = "portadoona"
-            ,image2 = "portadoonamap"
+            ,image1 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fportadoona.png?alt=media&token=888d82d8-140e-443b-a427-88929c082cf6"
+            ,image2 = "https://firebasestorage.googleapis.com/v0/b/hillforts-2a0b2.appspot.com/o/Seed%2Fportadoonamap.png?alt=media&token=13a0a56a-8ec4-4cc9-a6f1-3d27a18bf7e5"
             ,image3 = ""
             ,image4 = ""
         )
