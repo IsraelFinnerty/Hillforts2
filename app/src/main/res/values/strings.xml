@@ -62,6 +62,10 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_hillforts">List of Hillforts</string>
+    <string name="menu_map">Map</string>
+    <string name="image_placeholder">Hillfort Image</string>
+    <string name="title_placeholder">Hillfort Title</string>
+    <string name="description_placeholder">Hillfort Description</string>
 
 
 </resources>

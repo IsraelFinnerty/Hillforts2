@@ -17,6 +17,12 @@
     app:showAsAction="always" />
 
     <item
+        android:id="@+id/item_map"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/menu_map"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/item_fav"
         android:icon="@drawable/ic_baseline_star_outline_24"
         android:title="@string/fav_title"
