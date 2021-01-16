@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 import com.wit.hillforts.R
 import com.wit.hillforts.models.HillfortModel
@@ -46,7 +47,7 @@ class HillfortAdapter constructor(
             itemView.location.text= "Location: ${formattedLat}, ${formattedLng}"
             itemView.visited.text= "Visited: $visited"
             if (hillfort.image1.length > 20) {
-                itemView.hillfortImage.setImageURI(Uri.parse(hillfort.image1))
+                 Glide.with(itemView.context).load(hillfort.image1).into(itemView.hillfortImage);
             }
             else  itemView.hillfortImage.setImageResource(itemView.context.getResources().getIdentifier(hillfort.image1, "drawable", itemView.context.packageName))
             itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
