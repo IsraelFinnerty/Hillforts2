@@ -7,71 +7,47 @@ import android.os.Bundle
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.wit.hillforts.R
 import com.wit.hillforts.models.Location
+import com.wit.hillforts.views.BaseView
 
-class MapView : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
+class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener  {
 
     private lateinit var map: GoogleMap
-    var location = Location()
     lateinit var presenter: MapPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         presenter = MapPresenter(this)
+        mapFragment.getMapAsync {
+            map = it
+            map.setOnMarkerDragListener(this)
+            map.setOnMarkerClickListener(this)
+            presenter.doConfigureMap(map)
+        }
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-        val loc = LatLng(location.lat, location.lng)
-        val options = MarkerOptions()
-            .title("Hillfort")
-            .snippet("GPS : " + loc.toString())
-            .draggable(true)
-            .position(loc)
+    override fun onMarkerDragStart(marker: Marker) {}
 
-        map.setOnMarkerClickListener(this)
-                
-
-
-         map.addMarker(options)
-        map.setOnMarkerDragListener(this)
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
-
-
-          }
-
-    override fun onMarkerDragStart(marker: Marker) {
-    }
-
-    override fun onMarkerDrag(marker: Marker) {
-    }
+    override fun onMarkerDrag(marker: Marker) {}
 
     override fun onMarkerDragEnd(marker: Marker) {
-        location.lat = marker.position.latitude
-        location.lng = marker.position.longitude
-        location.zoom = map.cameraPosition.zoom
+        presenter.doUpdateLocation(marker.position.latitude, marker.position.longitude)
     }
 
-
-
     override fun onBackPressed() {
-        val resultIntent = Intent()
-        resultIntent.putExtra("location", location)
-        setResult(Activity.RESULT_OK, resultIntent)
-        finish()
-        super.onBackPressed()
+        presenter.doSave()
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val loc = LatLng(location.lat, location.lng)
-        marker.setSnippet("GPS : " + loc.toString())
+        presenter.doUpdateMarker(marker)
         return false
     }
-
-    }
+}
