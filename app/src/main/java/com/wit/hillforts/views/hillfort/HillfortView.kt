@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.RatingBar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import com.wit.hillforts.R
 import com.wit.hillforts.views.login.LoginView
@@ -37,7 +39,7 @@ class HillfortView :  BaseView(), AnkoLogger {
     lateinit var drawerLayout: DrawerLayout
 
     lateinit var presenter: HillfortPresenter
-    var placemark = HillfortModel()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,8 +65,17 @@ class HillfortView :  BaseView(), AnkoLogger {
 
 
         button_visited.setOnCheckedChangeListener { _, isChecked ->
-            presenter.doCheckChange(isChecked)
+            presenter.doCheckVisited(isChecked)
                     }
+
+        button_fav.setOnCheckedChangeListener { _, isChecked ->
+            presenter.doCheckFav(isChecked)
+        }
+
+        ratingBar.setOnRatingBarChangeListener(object : RatingBar.OnRatingBarChangeListener {
+            override fun onRatingChanged(ratignBar: RatingBar?, rating: Float, fromUser: Boolean) {
+                presenter.doCheckRating(rating)
+            } })
 
         btnAdd.setOnClickListener() {
             presenter.doAddOrSave(hillfortName.text.toString(), description.text.toString(), notes.text.toString(), date_visited.year, date_visited.month, date_visited.dayOfMonth   )
@@ -131,6 +142,7 @@ class HillfortView :  BaseView(), AnkoLogger {
                 startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
             }
             R.id.item_logout -> startActivity<LoginView>()
+            R.id.item_save ->  presenter.doAddOrSave(hillfortName.text.toString(), description.text.toString(), notes.text.toString(), date_visited.year, date_visited.month, date_visited.dayOfMonth   )
 
         }
         return super.onOptionsItemSelected(item)
@@ -149,9 +161,11 @@ class HillfortView :  BaseView(), AnkoLogger {
         hillfortName.setText(hillfort.name)
         description.setText(hillfort.description)
         notes.setText(hillfort.notes)
+        button_fav.setChecked(hillfort.fav)
         button_visited.setChecked(hillfort.visited)
         date_visited.updateDate(hillfort.dateVisitedYear, hillfort.dateVisitedMonth, hillfort.dateVisitedDay)
         btnAdd.setText(R.string.button_editHillfort)
+        ratingBar.setRating(hillfort.rating)
 
         if (hillfort.visited) {
             date_visited.setVisibility(View.VISIBLE)
@@ -159,22 +173,22 @@ class HillfortView :  BaseView(), AnkoLogger {
         }
 
         if (hillfort.image1 != "") { chooseImage.setText(R.string.button_changeImage)
-            if (hillfort.image1.length > 20) { hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image1))
+            if (hillfort.image1.length > 20) { Glide.with(this).load(hillfort.image1).into(hillfortImage)
             } else hillfortImage.setImageResource(this.getResources().getIdentifier(hillfort.image1, "drawable", this.packageName))
         }
 
         if (hillfort.image2 != "") { chooseImage2.setText(R.string.button_changeImage2)
-            if (hillfort.image2.length > 20) { hillfortImage2.setImageBitmap(readImageFromPath(this, hillfort.image2))
+            if (hillfort.image2.length > 20) { Glide.with(this).load(hillfort.image2).into(hillfortImage2)
             } else hillfortImage2.setImageResource(this.getResources().getIdentifier(hillfort.image2, "drawable", this.packageName))
         }
 
         if (hillfort.image3 != "") { chooseImage3.setText(R.string.button_changeImage3)
-            if (hillfort.image3.length > 20) { hillfortImage3.setImageBitmap(readImageFromPath(this, hillfort.image3))
+            if (hillfort.image3.length > 20) {Glide.with(this).load(hillfort.image3).into(hillfortImage3)
             } else hillfortImage4.setImageResource(this.getResources().getIdentifier(hillfort.image3, "drawable", this.packageName))
         }
 
         if (hillfort.image4 != "") { chooseImage4.setText(R.string.button_changeImage4)
-            if (hillfort.image4.length > 20) { hillfortImage4.setImageBitmap(readImageFromPath(this, hillfort.image4))
+            if (hillfort.image4.length > 20) { Glide.with(this).load(hillfort.image4).into(hillfortImage4)
             } else hillfortImage4.setImageResource(this.getResources().getIdentifier(hillfort.image4, "drawable", this.packageName))
         }
     }

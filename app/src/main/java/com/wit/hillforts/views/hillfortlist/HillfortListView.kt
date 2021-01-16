@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.intentFor
 import com.wit.hillforts.R
+import com.wit.hillforts.activities.HillfortMapsActivity
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
@@ -102,6 +103,7 @@ class HillfortListView : BaseView(), HillfortListener {
             R.id.item_settings -> presenter.doShowSettings()
             R.id.item_logout -> presenter.doLogout()
             R.id.item_fav -> presenter.doFav()
+            R.id.item_map -> presenter.doMap()
             }
         return super.onOptionsItemSelected(item)
     }
