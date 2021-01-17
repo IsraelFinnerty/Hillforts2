@@ -44,6 +44,16 @@ class LoginView : BaseView() {
                 presenter.doLogin(email,password)
             }
         }
+
+        forgotPassword.setOnClickListener{
+            val email = email.text.toString()
+            if (email == "") {
+                toast("Enter your email")
+            }
+            else {
+                presenter.doSendPasswordReset(email)
+            }
+        }
     }
 
     override fun showProgress() {

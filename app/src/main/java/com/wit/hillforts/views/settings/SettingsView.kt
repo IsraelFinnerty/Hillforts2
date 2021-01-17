@@ -41,6 +41,11 @@ class SettingsView: BaseView() {
             presenter.doClickListener()
         }
 
+        settingsPassword.setOnClickListener(){
+             presenter.doSendPasswordReset()
+
+        }
+
    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

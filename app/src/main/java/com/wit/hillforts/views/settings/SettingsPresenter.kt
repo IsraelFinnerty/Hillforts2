@@ -41,9 +41,8 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
         // navDrawer.navigationListener(user)
 
         // view.updateName.setText(user!!.name)
-        view.updateEmail.setText(user!!.email)
-        // view.updatePassword.setText(user.password)
-        //  view.updateYear.setText(user.year.toString())
+        view.settingsEmail.setText(user!!.email)
+
 
         for (hillfort in hillforts) {
             totalHillforts++
@@ -124,7 +123,7 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
             auth.sendPasswordResetEmail(user!!.email!!)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Log.d(ContentValues.TAG, "Password Reset Email Sent")
+                        view?.toast("Password Reset Email Sent")
                     }
                 }
         }
