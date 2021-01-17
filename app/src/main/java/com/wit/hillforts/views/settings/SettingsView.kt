@@ -7,10 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.wit.hillforts.R
+import com.wit.hillforts.views.BaseView
 import com.wit.hillforts.views.settings.SettingsPresenter
 import kotlinx.android.synthetic.main.activity_settings.*
 
-class SettingsView: AppCompatActivity() {
+class SettingsView: BaseView() {
 
     lateinit var presenter: SettingsPresenter
     lateinit var drawerLayout: DrawerLayout

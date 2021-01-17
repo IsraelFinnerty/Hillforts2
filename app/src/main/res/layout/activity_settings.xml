@@ -65,28 +65,8 @@
                     android:textStyle="bold"
                     android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/nameSettings"
-                    android:text="@string/hint_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:paddingLeft="16dp"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/updateName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:autofillHints=""
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+
 
                 <TextView
                     android:id="@+id/settingsEmail"
@@ -107,6 +87,7 @@
                     android:layout_margin="8dp"
                     android:autofillHints=""
                     android:inputType="textEmailAddress"
+                    android:hint="Updated Email"
                     android:maxLength="100"
                     android:maxLines="1"
                     android:padding="8dp"
@@ -114,54 +95,21 @@
                     android:textSize="14sp"
                    />
 
-                <TextView
-                    android:id="@+id/settingsPassword"
-                    android:text="@string/hint_password"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:paddingLeft="16dp"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
-
-
                 <EditText
-                    android:id="@+id/updatePassword"
+                    android:id="@+id/confirmEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:autofillHints=""
-                    android:inputType="textPassword"
-                    android:maxLength="2500"
-                    android:maxLines="10"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp"
-                    android:scrollbars="vertical"/>
-
-
-                <TextView
-                    android:id="@+id/settingsyear"
-                    android:text="@string/hint_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:paddingLeft="16dp"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/updateYear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:maxLength="40"
+                    android:inputType="textEmailAddress"
+                    android:hint="Confirm Email"
+                    android:maxLength="100"
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    />
+
 
                 <Button
                     android:id="@+id/btnUpdate"
@@ -169,12 +117,29 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/colorAccent"
-                    android:paddingTop="8dp"
                     android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/button_settings"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+                <Button
+                    android:id="@+id/settingsPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@color/colorAccent"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/button_password"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"/>
+
+
+
+
 
 
                 <TextView

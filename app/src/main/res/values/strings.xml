@@ -36,7 +36,8 @@
     <string name="rating">Rating</string>
     <string name="title_activity_login"> Signup/Login to Hillfort</string>
     <string name="settings_title">Update Details</string>
-    <string name="button_settings">Update</string>
+    <string name="button_settings">Update Email</string>
+    <string name="button_password">Reset Password</string>
     <string name="stats_title">Statistics</string>
     <string name="hint_login">Email Address</string>
     <string name="hint_password">Password</string>
