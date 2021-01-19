@@ -24,14 +24,12 @@ import org.jetbrains.anko.*
 
 class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     var hillfort = HillfortModel()
-    var user = User()
 
     val IMAGE_REQUEST1 = 1
     val IMAGE_REQUEST2 = 2
     val IMAGE_REQUEST3 = 3
     val IMAGE_REQUEST4 = 4
     val LOCATION_REQUEST = 5
-    lateinit var drawerLayout: DrawerLayout
     var edit = false
     var fireStore: HillfortFireStore? = app.hillforts as HillfortFireStore
 
@@ -132,7 +130,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
             doAsync {
                 app.hillforts.delete(hillfort)
                 uiThread {
-                    view?.finish()
+                    view?.navigateTo(VIEW.LIST)
                 }
             }
         }

@@ -9,9 +9,11 @@ import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.User
 import com.wit.hillforts.views.BasePresenter
 import com.wit.hillforts.views.BaseView
+import com.wit.hillforts.views.VIEW
 import com.wit.hillforts.views.hillfortlist.HillfortListView
 import com.wit.hillforts.views.login.LoginView
 import kotlinx.android.synthetic.main.activity_settings.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -42,6 +44,7 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
 
         // view.updateName.setText(user!!.name)
         view.settingsEmail.setText(user!!.email)
+
 
 
         for (hillfort in hillforts) {
@@ -104,10 +107,6 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
         }
     }
 
-    fun doLogout()
-    {
-        view?.startActivity<LoginView>()
-    }
 
     fun doUpdateEmail(email: String) {
         user!!.updateEmail(email)

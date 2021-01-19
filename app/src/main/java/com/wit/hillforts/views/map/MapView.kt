@@ -14,6 +14,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.wit.hillforts.R
 import com.wit.hillforts.models.Location
 import com.wit.hillforts.views.BaseView
+import kotlinx.android.synthetic.main.activity_hillfort_list.*
+import kotlinx.android.synthetic.main.activity_hillfort_maps.*
 
 class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener  {
 
@@ -24,6 +26,7 @@ class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerCl
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
+
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         presenter = MapPresenter(this)
         mapFragment.getMapAsync {
@@ -32,7 +35,9 @@ class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerCl
             map.setOnMarkerClickListener(this)
             presenter.doConfigureMap(map)
         }
-    }
+
+
+        }
 
     override fun onMarkerDragStart(marker: Marker) {}
 

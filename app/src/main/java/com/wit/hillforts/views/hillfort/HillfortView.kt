@@ -25,34 +25,15 @@ import kotlinx.android.synthetic.main.activity_hillfort.hillfortImage
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.*
 
-
-
 class HillfortView :  BaseView(), AnkoLogger {
 
     var hillfort = HillfortModel()
-    var user = User()
-    val IMAGE_REQUEST1 = 1
-    val IMAGE_REQUEST2 = 2
-    val IMAGE_REQUEST3 = 3
-    val IMAGE_REQUEST4 = 4
-    val LOCATION_REQUEST = 5
-    lateinit var drawerLayout: DrawerLayout
-
     lateinit var presenter: HillfortPresenter
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort)
         info("Hillfort Activity started..")
-
-        if (intent.hasExtra("User"))
-        {
-            user = intent.extras?.getParcelable<User>("User")!!
-        }
-
-
 
         drawerLayout = findViewById(R.id.drawer_layout_hillfort)
 
@@ -62,7 +43,6 @@ class HillfortView :  BaseView(), AnkoLogger {
 
         presenter = initPresenter( HillfortPresenter(this)) as HillfortPresenter
         info("Hillfort Activity started..")
-
 
         button_visited.setOnCheckedChangeListener { _, isChecked ->
             presenter.doCheckVisited(isChecked)
@@ -95,34 +75,10 @@ class HillfortView :  BaseView(), AnkoLogger {
             else  drawerLayout.closeDrawer(GravityCompat.START)
         }
 
-        nav_view_hillfort.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.nav_list -> {
-                    startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
-                    true
-                }
-                R.id.nav_settings -> {
-                    startActivityForResult(intentFor<SettingsView>().putExtra("User", user), 0)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    true
-                }
-                R.id.nav_add -> {
-                    startActivityForResult(intentFor<HillfortView>().putExtra("User", user),0)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    true
-                }
-                R.id.nav_logout -> {
-                    startActivity<LoginView>()
-                    true
-                }
-                else -> {
-                    if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-                        drawer_layout.closeDrawer(GravityCompat.START)
-                    }
-                    false
-                }
-            }
-        }
+        nav_view_hillfort.setNavigationItemSelectedListener { menuItem -> navDrawer(menuItem) }
+
+        bottom_navigation1.setOnNavigationItemSelectedListener { item ->  bottomNavigation(item)  }
+
 
     }
 
@@ -139,8 +95,7 @@ class HillfortView :  BaseView(), AnkoLogger {
             R.id.item_cancel -> finish()
             R.id.item_delete -> {
                 presenter.doDelete()
-                startActivityForResult(intentFor<HillfortListView>().putExtra("User", user), 0)
-            }
+                          }
             R.id.item_logout -> startActivity<LoginView>()
             R.id.item_save ->  presenter.doAddOrSave(hillfortName.text.toString(), description.text.toString(), notes.text.toString(), date_visited.year, date_visited.month, date_visited.dayOfMonth   )
 

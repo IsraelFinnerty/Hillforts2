@@ -5,7 +5,7 @@
         android:id="@+id/list_bottom"
         android:enabled="true"
         android:icon="@drawable/ic_menu_gallery"
-        android:title="@string/menu_hillforts"/>
+        android:title="@string/menu_list"/>
     <item
         android:id="@+id/fav_bottom"
         android:enabled="true"
@@ -22,5 +22,11 @@
         android:icon="@android:drawable/ic_menu_mapmode"
         android:enabled="true"
         android:title="@string/menu_map"
+        />
+
+    <item
+        android:id="@+id/logout_bottom"
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
+        android:title="@string/menu_logout"
         />
 </menu>

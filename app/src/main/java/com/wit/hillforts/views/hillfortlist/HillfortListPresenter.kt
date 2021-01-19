@@ -7,27 +7,30 @@ import com.wit.hillforts.views.settings.SettingsView
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.User
+import com.wit.hillforts.models.firebase.HillfortFireStore
 import com.wit.hillforts.views.BasePresenter
 import com.wit.hillforts.views.BaseView
 import com.wit.hillforts.views.VIEW
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import org.jetbrains.anko.*
 
 class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
 
-    var user = User()
+
+
     var favCheck = false
+
     init {
-
-
-        if (view.intent.hasExtra("User")) {
-            user = view.intent.extras?.getParcelable<User>("User")!!
-        }
 
         if (view.intent.hasExtra("Fav")) {
             favCheck = true
         }
+
+
+
+
     }
 
     fun loadHillforts() {
@@ -51,7 +54,7 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
 
     fun doAddHillfort() {
-        view?.navigateTo(VIEW.HILLFORT, 0, "User", user)
+        view?.navigateTo(VIEW.HILLFORT)
 
         }
 
@@ -61,12 +64,12 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
            }
 
     fun doShowSettings() {
-        view?.navigateTo(VIEW.SETTINGS, 0, "User", user)
+        view?.navigateTo(VIEW.SETTINGS)
           }
 
     fun doFav()
     {
-          view?.navigateTo(VIEW.FAVS, 0, "Fav", user)
+          view?.navigateTo(VIEW.FAVS, 0, "Fav")
     }
 
     fun doMap()
@@ -74,10 +77,6 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
         view?.navigateTo(VIEW.MAP)
     }
 
-    fun doLogout() {
-        FirebaseAuth.getInstance().signOut()
-        app.hillforts.clear()
-        view?.navigateTo(VIEW.LOGIN)
-    }
+
 
 }
