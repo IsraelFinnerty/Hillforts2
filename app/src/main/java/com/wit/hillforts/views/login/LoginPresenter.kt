@@ -1,6 +1,8 @@
 package com.wit.hillforts.views.login
 
 
+import android.content.ContentValues
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.wit.hillforts.models.firebase.HillfortFireStore
 import com.wit.hillforts.views.BasePresenter
@@ -60,6 +62,20 @@ class LoginPresenter(view: BaseView) : BasePresenter(view) {
                     view?.hideProgress()
                 }
         }
+
+    fun doSendPasswordReset(email: String){
+        if (email != null) {
+            auth.sendPasswordResetEmail(email!!)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        view?.toast("Password Reset Email Sent")
+                    }
+                        else {
+                        view?.toast("Email Address Not Found")
+                        }
+                }
+            }
+    }
 
 
     }

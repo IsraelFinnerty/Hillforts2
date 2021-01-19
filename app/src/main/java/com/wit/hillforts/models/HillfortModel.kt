@@ -20,9 +20,9 @@ data class HillfortModel(   var id: Long = 0,
                             var dateVisitedYear: Int = 2020,
                             var dateVisitedMonth: Int = 9,
                             var dateVisitedDay: Int = 26,
-                            var lat : Double = 51.540364,
-                            var lng: Double = -9.1114,
-                            var zoom: Float = 12f) : Parcelable
+                            var lat : Double = 51.88,
+                            var lng: Double = -8.49,
+                            var zoom: Float = 8f) : Parcelable
 
 
 @Parcelize

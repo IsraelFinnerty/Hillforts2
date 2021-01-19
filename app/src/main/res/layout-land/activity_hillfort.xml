@@ -41,8 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:titleTextColor="@color/colorPrimary" />
-
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
@@ -331,8 +329,11 @@
                     android:textSize="16sp" />
 
 
+
+
             </LinearLayout>
         </ScrollView>
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation1"
             android:layout_width="match_parent"
@@ -344,11 +345,7 @@
             app:menu="@menu/bottom_navigation_menu" />
 
     </RelativeLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view_hillfort"
