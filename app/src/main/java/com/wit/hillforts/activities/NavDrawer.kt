@@ -35,7 +35,7 @@ class NavDrawer : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav_drawer)
-        user_email.setText(user!!.email)
+        // user_email.setText(user!!.email)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 

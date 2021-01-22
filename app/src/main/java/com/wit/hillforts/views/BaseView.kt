@@ -149,4 +149,5 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
     open fun showHillforts(hillforts: List<HillfortModel>) {}
     open fun showProgress() {}
     open fun hideProgress() {}
+    open fun findById(id: Long): HillfortModel? {return HillfortModel()}
 }
