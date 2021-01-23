@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.wit.hillforts.R
 import com.wit.hillforts.models.User
 import com.wit.hillforts.views.hillfort.HillfortView
@@ -20,6 +21,7 @@ import com.wit.hillforts.views.login.LoginView
 import com.wit.hillforts.views.settings.SettingsView
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import kotlinx.android.synthetic.main.activity_settings.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 
@@ -28,10 +30,12 @@ class NavDrawer : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var drawerLayout: DrawerLayout
+    var user = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav_drawer)
+        // user_email.setText(user!!.email)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 

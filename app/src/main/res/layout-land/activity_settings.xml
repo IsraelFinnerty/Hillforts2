@@ -202,8 +202,6 @@
 
            </LinearLayout>
         </ScrollView>
-
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_settings"
             android:layout_width="match_parent"
@@ -214,8 +212,6 @@
             app:itemTextColor="@android:color/white"
             app:menu="@menu/bottom_navigation_menu" />
     </RelativeLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

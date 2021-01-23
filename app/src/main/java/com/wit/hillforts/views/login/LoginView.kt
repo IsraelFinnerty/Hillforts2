@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import org.jetbrains.anko.*
-
+import kotlinx.android.synthetic.main.activity_login.toolbar
 
 
 class LoginView : BaseView() {
@@ -18,7 +18,7 @@ class LoginView : BaseView() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        setSupportActionBar(toolbarAdd)
+        setSupportActionBar(toolbar)
         progressBar.visibility = View.GONE
 
         presenter = initPresenter(LoginPresenter(this)) as LoginPresenter
@@ -42,6 +42,16 @@ class LoginView : BaseView() {
             }
             else {
                 presenter.doLogin(email,password)
+            }
+        }
+
+        forgotPassword.setOnClickListener{
+            val email = email.text.toString()
+            if (email == "") {
+                toast("Enter your email")
+            }
+            else {
+                presenter.doSendPasswordReset(email)
             }
         }
     }

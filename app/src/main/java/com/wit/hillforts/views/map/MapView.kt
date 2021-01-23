@@ -1,77 +1,105 @@
 package com.wit.hillforts.views.map
 
-import android.app.Activity
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.gms.maps.CameraUpdateFactory
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.wit.hillforts.R
 import com.wit.hillforts.models.Location
+import com.wit.hillforts.views.BaseView
+import kotlinx.android.synthetic.main.activity_hillfort_list.*
+import kotlinx.android.synthetic.main.activity_hillfort_maps.*
+import kotlinx.android.synthetic.main.activity_map.*
 
-class MapView : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
+class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener  {
 
-    private lateinit var map: GoogleMap
-    var location = Location()
+
     lateinit var presenter: MapPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
-        presenter = MapPresenter(this)
+        presenter = initPresenter(MapPresenter(this)) as MapPresenter
+
+        toolbarMap.title = title
+        toolbarMap.setNavigationIcon(R.drawable.ic_baseline_menu_24)
+        setSupportActionBar(toolbarMap)
+
+        mapEdit.onCreate(savedInstanceState)
+        mapEdit.getMapAsync {
+            it.setOnMarkerDragListener(this)
+            it.setOnMarkerClickListener(this)
+            presenter.doConfigureMap(it)
+        }
+
+        }
+
+    override fun showLocation(location: Location) {
+        lat.setText("%.6f".format(location.lat))
+        lng.setText("%.6f".format(location.lng))
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-        val loc = LatLng(location.lat, location.lng)
-        val options = MarkerOptions()
-            .title("Hillfort")
-            .snippet("GPS : " + loc.toString())
-            .draggable(true)
-            .position(loc)
-
-        map.setOnMarkerClickListener(this)
-                
-
-
-         map.addMarker(options)
-        map.setOnMarkerDragListener(this)
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
-
-
-          }
-
-    override fun onMarkerDragStart(marker: Marker) {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_edit_location, menu)
+        return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.item_save -> {
+                presenter.doSave()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    override fun onMarkerDragStart(marker: Marker) {}
 
     override fun onMarkerDrag(marker: Marker) {
+        lat.setText("%.6f".format(marker.position.latitude))
+        lng.setText("%.6f".format(marker.position.longitude))
     }
 
     override fun onMarkerDragEnd(marker: Marker) {
-        location.lat = marker.position.latitude
-        location.lng = marker.position.longitude
-        location.zoom = map.cameraPosition.zoom
+        presenter.doUpdateLocation(marker.position.latitude, marker.position.longitude)
     }
 
-
-
     override fun onBackPressed() {
-        val resultIntent = Intent()
-        resultIntent.putExtra("location", location)
-        setResult(Activity.RESULT_OK, resultIntent)
-        finish()
-        super.onBackPressed()
+        presenter.doSave()
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        val loc = LatLng(location.lat, location.lng)
-        marker.setSnippet("GPS : " + loc.toString())
+        presenter.doUpdateMarker(marker)
         return false
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mapEdit.onDestroy()
     }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapEdit.onLowMemory()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapEdit.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapEdit.onResume()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapEdit.onSaveInstanceState(outState)
+    }
+
+
+}

@@ -1,12 +1,19 @@
 package com.wit.hillforts.views.settings
 
+import android.content.ContentValues
+import android.util.Log
 import android.view.View
+import com.google.firebase.auth.FirebaseAuth
 import com.wit.hillforts.R
 import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.User
+import com.wit.hillforts.views.BasePresenter
+import com.wit.hillforts.views.BaseView
+import com.wit.hillforts.views.VIEW
 import com.wit.hillforts.views.hillfortlist.HillfortListView
 import com.wit.hillforts.views.login.LoginView
 import kotlinx.android.synthetic.main.activity_settings.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -14,9 +21,12 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
-class SettingsPresenter(var view: SettingsView) {
-    lateinit var app: MainApp
-    var user = User()
+class SettingsPresenter(view: BaseView) : BasePresenter(view) {
+
+    var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    var user = FirebaseAuth.getInstance().currentUser
+    val hillforts = app.hillforts.findAll()
+
    // lateinit var navDrawer: NavDrawer
 
     var totalHillforts = 0
@@ -26,31 +36,29 @@ class SettingsPresenter(var view: SettingsView) {
     var recentVisited =  LocalDate.of(1900, 10, 31)
     var recentHillfort = ""
 
+
+
     init {
-        app = view.application as MainApp
+        // navDrawer = NavDrawer()
+        // navDrawer.navigationListener(user)
 
-        if (view.intent.hasExtra("User"))
-        {
-            val currentUser = view.intent.extras?.getParcelable<User>("User")!!
-            // user = app.statususers.findUserByEmail(currentUser.email)!!
-        }
+        // view.updateName.setText(user!!.name)
+        view.settingsEmail.setText(user!!.email)
 
-       // navDrawer = NavDrawer()
-       // navDrawer.navigationListener(user)
 
-        view.updateName.setText(user.name)
-        view.updateEmail.setText(user.email)
-        view.updatePassword.setText(user.password)
-        view.updateYear.setText(user.year.toString())
 
-        for (hillfort in user.hillforts) {
+        for (hillfort in hillforts) {
             totalHillforts++
             if (hillfort.visited) {
                 hillfortsVisited++
                 view.statsRecent.setVisibility(View.VISIBLE)
-                var currentVisited = LocalDate.of(hillfort.dateVisitedYear, hillfort.dateVisitedMonth+1, hillfort.dateVisitedDay)
+                var currentVisited = LocalDate.of(
+                    hillfort.dateVisitedYear,
+                    hillfort.dateVisitedMonth + 1,
+                    hillfort.dateVisitedDay
+                )
                 if (currentVisited.isAfter(recentVisited)) {
-                    recentVisited=currentVisited
+                    recentVisited = currentVisited
                     recentHillfort = hillfort.name
                 }
             }
@@ -64,37 +72,61 @@ class SettingsPresenter(var view: SettingsView) {
 
         view.statsTotal.setText("Total Hillforts: $totalHillforts")
         view.statsVisited.setText("Hillforts Visited: $hillfortsVisited")
-        view.statsRecent.setText("Most Recent Visit: $recentHillfort ${recentVisited.format(
-            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))}")
+        view.statsRecent.setText(
+            "Most Recent Visit: $recentHillfort ${
+                recentVisited.format(
+                    DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                )
+            }"
+        )
         view.statsNotes.setText("Notes Added: $notesAdded")
         view.statsImages.setText("Images Addded: $imagesAdded")
     }
 
+
     fun doClickListener() {
-      //  var emailUsed = app.users.findUserByEmail(view.updateEmail.text.toString())
-        var previousEmail = user.email
-        user.name = view.updateName.text.toString()
-        user.year = view.updateYear.text.toString().toInt()
-        user.email = view.updateEmail.text.toString()
-        user.password = view.updatePassword.text.toString()
-        if (user.name.isEmpty()) view.toast(view.getString(R.string.enter_name))
-        else if (user.email.isEmpty()) view.toast(view.getString(R.string.enter_email))
-        else if (user.password.isEmpty()) view.toast(view.getString(R.string.enter_password))
-        else if (user.password.length < 8) view.toast(view.getString(R.string.short_password))
-        else if (user.year == 0 || user.year > 4) view.toast(view.getString(R.string.enter_year))
-      //  else if (emailUsed != null && emailUsed.email != previousEmail) view.toast(view.getString(R.string.email_used)) // checks for email use on other accounts
-        else if (isEmailValid(user.email) == false) view.toast(view.getString(R.string.email_invalid))
+        val updateEmail = view?.updateEmail!!.text.toString()
+        val confirmEmail = view?.confirmEmail!!.text.toString()
+
+        if (isEmailValid(updateEmail) == false || isEmailValid(confirmEmail) == false)
+        {
+            view?.toast(R.string.email_invalid)
+        }
+        else if (updateEmail != confirmEmail) {
+            view?.toast("Email Mismatch")
+        }
+        else if(updateEmail == null){
+            view?.toast("Enter an Email Address")
+        }
+        else if(confirmEmail == null){
+           view?.toast("No Verify Email Address Entered")
+        }
         else {
-           // app.users.updateUser(user.copy())
-            view.startActivityForResult(view.intentFor<HillfortListView>().putExtra("User", user), 0)
+            doUpdateEmail(updateEmail)
+            view?.toast("Email Updated")
         }
     }
 
-    fun doLogout()
-    {
-        view.startActivity<LoginView>()
+
+    fun doUpdateEmail(email: String) {
+        user!!.updateEmail(email)
+            .addOnCompleteListener{ task ->
+                if(task.isSuccessful){
+                    Log.d(ContentValues.TAG, "Email address updated")
+                }
+            }
     }
 
+    fun doSendPasswordReset(){
+        if (user!!.email != null) {
+            auth.sendPasswordResetEmail(user!!.email!!)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        view?.toast("Password Reset Email Sent")
+                    }
+                }
+        }
+    }
 
     private fun isEmailValid(email: String): Boolean {
         val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})";
