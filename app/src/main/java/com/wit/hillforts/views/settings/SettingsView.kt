@@ -40,7 +40,6 @@ class SettingsView: BaseView() {
         }
 
 
-
         nav_view_settings.setNavigationItemSelectedListener { menuItem -> navDrawer(menuItem) }
 
         btnUpdate.setOnClickListener() { presenter.doClickListener() }

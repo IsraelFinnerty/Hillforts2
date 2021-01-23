@@ -2,6 +2,7 @@ package com.wit.hillforts.views
 
 import android.content.ClipData
 import android.content.Intent
+
 import android.os.Parcelable
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.wit.hillforts.R
 import com.wit.hillforts.views.map.HillfortMapsView
 import com.wit.hillforts.models.HillfortModel
+import com.wit.hillforts.models.Location
 import com.wit.hillforts.views.hillfort.HillfortView
 import com.wit.hillforts.views.hillfortlist.HillfortListView
 import com.wit.hillforts.views.login.LoginView
@@ -40,7 +42,7 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
     fun navigateTo(view: VIEW, code: Int = 0, key: String = "", value: Parcelable? = null) {
         var intent = Intent(this, HillfortListView::class.java)
         when (view) {
-         //   VIEW.LOCATION -> intent = Intent(this, EditLocationView::class.java)
+            VIEW.LOCATION -> intent = Intent(this, MapView::class.java)
             VIEW.HILLFORT -> intent = Intent(this, HillfortView::class.java)
             VIEW.MAPS -> intent = Intent(this, MapView::class.java)
             VIEW.LIST -> intent = Intent(this, HillfortListView::class.java)
@@ -149,4 +151,6 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
     open fun showHillforts(hillforts: List<HillfortModel>) {}
     open fun showProgress() {}
     open fun hideProgress() {}
-}
+    open fun findById(id: Long): HillfortModel? {return HillfortModel()}
+    open fun showLocation(location : Location) {}
+    }

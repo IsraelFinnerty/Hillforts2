@@ -1,47 +1,67 @@
 package com.wit.hillforts.views.map
 
-import android.app.Activity
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.gms.maps.CameraUpdateFactory
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.wit.hillforts.R
 import com.wit.hillforts.models.Location
 import com.wit.hillforts.views.BaseView
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import kotlinx.android.synthetic.main.activity_hillfort_maps.*
+import kotlinx.android.synthetic.main.activity_map.*
 
 class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener  {
 
-    private lateinit var map: GoogleMap
+
     lateinit var presenter: MapPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
+        presenter = initPresenter(MapPresenter(this)) as MapPresenter
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        presenter = MapPresenter(this)
-        mapFragment.getMapAsync {
-            map = it
-            map.setOnMarkerDragListener(this)
-            map.setOnMarkerClickListener(this)
-            presenter.doConfigureMap(map)
+        toolbarMap.title = title
+        toolbarMap.setNavigationIcon(R.drawable.ic_baseline_menu_24)
+        setSupportActionBar(toolbarMap)
+
+        mapEdit.onCreate(savedInstanceState)
+        mapEdit.getMapAsync {
+            it.setOnMarkerDragListener(this)
+            it.setOnMarkerClickListener(this)
+            presenter.doConfigureMap(it)
         }
 
-
         }
+
+    override fun showLocation(location: Location) {
+        lat.setText("%.6f".format(location.lat))
+        lng.setText("%.6f".format(location.lng))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_edit_location, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.item_save -> {
+                presenter.doSave()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     override fun onMarkerDragStart(marker: Marker) {}
 
-    override fun onMarkerDrag(marker: Marker) {}
+    override fun onMarkerDrag(marker: Marker) {
+        lat.setText("%.6f".format(marker.position.latitude))
+        lng.setText("%.6f".format(marker.position.longitude))
+    }
 
     override fun onMarkerDragEnd(marker: Marker) {
         presenter.doUpdateLocation(marker.position.latitude, marker.position.longitude)
@@ -55,4 +75,31 @@ class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerCl
         presenter.doUpdateMarker(marker)
         return false
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapEdit.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapEdit.onLowMemory()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapEdit.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapEdit.onResume()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapEdit.onSaveInstanceState(outState)
+    }
+
+
 }

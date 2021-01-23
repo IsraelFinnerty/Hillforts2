@@ -58,6 +58,8 @@ class HillfortListView : BaseView(), HillfortListener {
         bottom_navigation.setOnNavigationItemSelectedListener { item -> bottomNavigation(item) }
 
         presenter.loadHillforts()
+        presenter.doSwipeHandler()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -91,6 +93,12 @@ class HillfortListView : BaseView(), HillfortListener {
         recyclerView.adapter = HillfortAdapter(hillforts, this)
         recyclerView.adapter?.notifyDataSetChanged()
     }
+
+
+    override fun findById(id: Long): HillfortModel? {
+        return presenter.doFindById(id)
+    }
+
 
 }
 
