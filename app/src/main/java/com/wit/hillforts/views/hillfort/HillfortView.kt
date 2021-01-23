@@ -10,6 +10,7 @@ import android.widget.RatingBar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.GoogleMap
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import com.wit.hillforts.R
 import com.wit.hillforts.views.login.LoginView
@@ -29,6 +30,7 @@ class HillfortView :  BaseView(), AnkoLogger {
 
     var hillfort = HillfortModel()
     lateinit var presenter: HillfortPresenter
+    lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,19 +68,23 @@ class HillfortView :  BaseView(), AnkoLogger {
         chooseImage3.setOnClickListener { presenter.doSelectImage3() }
         chooseImage4.setOnClickListener { presenter.doSelectImage4() }
 
-        hillfortLocation.setOnClickListener { presenter.doSetLocation() }
-
-
         val check = drawerLayout.isDrawerOpen(GravityCompat.START)
         toolbarAdd.setNavigationOnClickListener {
             if (!check) drawerLayout.openDrawer(GravityCompat.START)
             else  drawerLayout.closeDrawer(GravityCompat.START)
         }
 
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync {
+            map = it
+            presenter.doConfigureMap(map)
+            it.setOnMapClickListener { presenter.doSetLocation() }
+        }
+
+
         nav_view_hillfort.setNavigationItemSelectedListener { menuItem -> navDrawer(menuItem) }
 
         bottom_navigation1.setOnNavigationItemSelectedListener { item ->  bottomNavigation(item)  }
-
 
     }
 
@@ -113,9 +119,9 @@ class HillfortView :  BaseView(), AnkoLogger {
     }
 
     override fun showHillfort(hillfort: HillfortModel){
-        hillfortName.setText(hillfort.name)
-        description.setText(hillfort.description)
-        notes.setText(hillfort.notes)
+        if (hillfortName.text.isEmpty()) hillfortName.setText(hillfort.name)
+        if (description.text.isEmpty()) description.setText(hillfort.description)
+        if (notes.text.isEmpty())notes.setText(hillfort.notes)
         button_fav.setChecked(hillfort.fav)
         button_visited.setChecked(hillfort.visited)
         date_visited.updateDate(hillfort.dateVisitedYear, hillfort.dateVisitedMonth, hillfort.dateVisitedDay)
@@ -148,5 +154,31 @@ class HillfortView :  BaseView(), AnkoLogger {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+        presenter.doResartLocationUpdates()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
 }
+
 

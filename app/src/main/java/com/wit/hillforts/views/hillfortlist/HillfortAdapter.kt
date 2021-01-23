@@ -54,7 +54,7 @@ class HillfortAdapter constructor(
             itemView.tag = hillfort.id
             itemView.description.text = hillfort.description
             itemView.location.text= "Location: ${formattedLat}, ${formattedLng}"
-            itemView.visited.text= "Visited: $visited"
+            itemView.visited?.text= "Visited: $visited"
             if (hillfort.image1.length > 20) {
                  Glide.with(itemView.context).load(hillfort.image1).into(itemView.hillfortImage);
             }
