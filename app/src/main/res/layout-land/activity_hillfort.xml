@@ -224,7 +224,7 @@
 
                     <com.google.android.gms.maps.MapView
                         android:id="@+id/mapView"
-                        android:layout_width="363dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="162dp"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="32dp"

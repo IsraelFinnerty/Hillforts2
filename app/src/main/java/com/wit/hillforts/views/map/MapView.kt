@@ -50,6 +50,9 @@ class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerCl
             R.id.item_save -> {
                 presenter.doSave()
             }
+            R.id.item_cancel -> {
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
