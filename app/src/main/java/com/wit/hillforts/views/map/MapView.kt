@@ -24,7 +24,6 @@ class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerCl
         presenter = initPresenter(MapPresenter(this)) as MapPresenter
 
         toolbarMap.title = title
-        toolbarMap.setNavigationIcon(R.drawable.ic_baseline_menu_24)
         setSupportActionBar(toolbarMap)
 
         mapEdit.onCreate(savedInstanceState)

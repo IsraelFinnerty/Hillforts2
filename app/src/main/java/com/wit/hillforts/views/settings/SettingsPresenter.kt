@@ -5,17 +5,9 @@ import android.util.Log
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.wit.hillforts.R
-import com.wit.hillforts.main.MainApp
-import com.wit.hillforts.models.User
 import com.wit.hillforts.views.BasePresenter
 import com.wit.hillforts.views.BaseView
-import com.wit.hillforts.views.VIEW
-import com.wit.hillforts.views.hillfortlist.HillfortListView
-import com.wit.hillforts.views.login.LoginView
 import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.nav_header_main.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -26,26 +18,14 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var user = FirebaseAuth.getInstance().currentUser
     val hillforts = app.hillforts.findAll()
-
-   // lateinit var navDrawer: NavDrawer
-
     var totalHillforts = 0
     var hillfortsVisited = 0
-    var notesAdded = 0
-    var imagesAdded = 0
+    var favs = 0
     var recentVisited =  LocalDate.of(1900, 10, 31)
     var recentHillfort = ""
 
-
-
     init {
-        // navDrawer = NavDrawer()
-        // navDrawer.navigationListener(user)
-
-        // view.updateName.setText(user!!.name)
         view.settingsEmail.setText(user!!.email)
-
-
 
         for (hillfort in hillforts) {
             totalHillforts++
@@ -62,13 +42,8 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
                     recentHillfort = hillfort.name
                 }
             }
-            if (hillfort.notes != "") notesAdded++
-            if (hillfort.image1.length > 20) imagesAdded++
-            if (hillfort.image2.length > 20) imagesAdded++
-            if (hillfort.image3.length > 20) imagesAdded++
-            if (hillfort.image4.length > 20) imagesAdded++
-
-        }
+            if (hillfort.fav) favs++
+           }
 
         view.statsTotal.setText("Total Hillforts: $totalHillforts")
         view.statsVisited.setText("Hillforts Visited: $hillfortsVisited")
@@ -79,8 +54,7 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
                 )
             }"
         )
-        view.statsNotes.setText("Notes Added: $notesAdded")
-        view.statsImages.setText("Images Addded: $imagesAdded")
+        view.statsFavs.setText("Favourites: $favs")
     }
 
 
