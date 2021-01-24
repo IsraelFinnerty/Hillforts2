@@ -3,9 +3,6 @@ package com.wit.hillforts.views.hillfort
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
-import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
@@ -16,23 +13,18 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.wit.hillforts.R
 import com.wit.hillforts.helpers.*
-import com.wit.hillforts.views.map.MapView
-import com.wit.hillforts.main.MainApp
 import com.wit.hillforts.models.HillfortModel
 import com.wit.hillforts.models.Location
-import com.wit.hillforts.models.User
 import com.wit.hillforts.models.firebase.HillfortFireStore
 import com.wit.hillforts.views.BasePresenter
 import com.wit.hillforts.views.BaseView
 import com.wit.hillforts.views.VIEW
-import com.wit.hillforts.views.hillfortlist.HillfortListView
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.*
 
 
 class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     var hillfort = HillfortModel()
-
     val IMAGE_REQUEST1 = 1
     val IMAGE_REQUEST2 = 2
     val IMAGE_REQUEST3 = 3
@@ -44,8 +36,14 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     var locationService: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(view)
     val locationRequest = createDefaultLocationRequest()
+    var fireStore: HillfortFireStore? = null
+
 
     init {
+        if (app.hillforts is HillfortFireStore) {
+            fireStore = app.hillforts as HillfortFireStore
+        }
+
         if (view.intent.hasExtra("hillfort_edit")) {
             edit = true
             hillfort = view.intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
@@ -80,21 +78,12 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
                 }
                 uiThread {
                     view!!.intent.removeExtra("Fav")
-                    view?.navigateTo(VIEW.LIST)
+                    fireStore!!.fetchHillforts {
+                        view?.navigateTo(VIEW.LIST)
+                    }
 
                 }
             }
-            /*
-            view?.info("add Button Pressed: ${hillfort}")
-
-            view?.setResult(AppCompatActivity.RESULT_OK)
-            */
-            /*  view!!.intent.removeExtra("Fav")
-            fireStore!!.fetchHillforts {
-                //   view?.hideProgress()
-                view?.navigateTo(VIEW.LIST)
-            }*/
-
         } else {
             view?.toast(R.string.enter_title)
         }

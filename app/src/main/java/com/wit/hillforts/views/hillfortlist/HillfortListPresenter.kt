@@ -1,6 +1,7 @@
 package com.wit.hillforts.views.hillfortlist
 
 
+import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -37,8 +38,16 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
                         }
                     }
                     view?.showHillforts(favHillforts)
+                    if (favHillforts.isEmpty()) {
+                        view!!.none.setVisibility(View.VISIBLE)
+                        view!!.none.setText("No Favourites")
+                    }
                 } else {
                     view?.showHillforts(hillforts)
+                    if (hillforts.isEmpty()) {
+                        view!!.none.setVisibility(View.VISIBLE)
+                        view!!.none.setText("No Hillforts")
+                    }
                 }
             }
         }
@@ -100,7 +109,8 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
         doAsync {
             app.hillforts.delete(hillfort)
             uiThread {
-                view?.navigateTo(VIEW.LIST)
+                if (favCheck) doFav()
+                else view?.navigateTo(VIEW.LIST)
             }
         }
     }

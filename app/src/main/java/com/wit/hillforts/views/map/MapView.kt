@@ -24,7 +24,6 @@ class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerCl
         presenter = initPresenter(MapPresenter(this)) as MapPresenter
 
         toolbarMap.title = title
-        toolbarMap.setNavigationIcon(R.drawable.ic_baseline_menu_24)
         setSupportActionBar(toolbarMap)
 
         mapEdit.onCreate(savedInstanceState)
@@ -50,6 +49,9 @@ class MapView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerCl
         when (item?.itemId) {
             R.id.item_save -> {
                 presenter.doSave()
+            }
+            R.id.item_cancel -> {
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)
